@@ -1,0 +1,33 @@
+/*!
+ * WebCard tool palette button styling
+ */
+.btn-matrix {
+  /* bootstrap4 now uses flexbox, undo that for the moment to layout as grid matrix */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0px;
+}
+.btn-matrix > .btn {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+.btn-matrix > .btn:nth-child(2n+3) {
+  clear: left;
+  margin-left: 0;
+}
+.btn-matrix > .btn:nth-child(n+3) {
+  margin-top: -1px;
+}
+.btn-matrix > .btn:first-child {
+  border-bottom-left-radius: 0;
+}
+.btn-matrix > .btn:nth-child(2) {
+  border-top-right-radius: 4px !important;
+}
+.btn-matrix > .btn:nth-last-child(2) {
+  border-bottom-left-radius: 4px !important;
+}
+.btn-matrix > .btn:last-child {
+  border-top-right-radius: 0;
+}
