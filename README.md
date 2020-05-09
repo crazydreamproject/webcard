@@ -1,2 +1,2 @@
-# webcard
+# WebCard
 HyperCard on the Web
