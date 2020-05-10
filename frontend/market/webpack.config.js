@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
             //openPage: './dist/index.html',
             contentBase: path.join(__dirname, 'public'),
             watchContentBase: true,
-            port: 8182,
+            port: 8183,
             host: argv.mode === 'production' ? 'localhost' : 'localhost', //'0.0.0.0',
             disableHostCheck: true,
             headers: {
@@ -33,11 +33,11 @@ module.exports = (env, argv) => {
         output: {
             path: path.join(__dirname, 'dist'),
             publicPath: argv.mode === 'production' ?
-                'https://webcard-bucket.s3.amazonaws.com/static/frontend/publish/dist'
-                : 'http://host.docker.internal:8182',
+                'https://webcard-bucket.s3.amazonaws.com/static/frontend/market/dist'
+                : 'http://host.docker.internal:8183',
             filename: argv.mode === 'production' ? `[name].[chunkhash].js` : `[name].bundle.js`,  //`[name].min.js`
             libraryTarget: 'var',
-            library: 'WebCardPublish'
+            library: 'WebCardMarket'
         },
         optimization: {
             minimizer: [new TerserPlugin({
@@ -104,7 +104,7 @@ module.exports = (env, argv) => {
         plugins: [
             new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
-                title: 'Webcard Publishing',
+                title: 'Webcard Market Place',
                 template: './src/index.html',
                 filename: 'index.html'
             }),

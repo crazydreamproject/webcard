@@ -1,7 +1,7 @@
 {
-  "name": "webcard-publish",
+  "name": "webcard-market",
   "version": "1.0.0",
-  "description": "Publishing tool of webcard",
+  "description": "Market place of webcard",
   "main": "index.js",
   "private": true,
   "scripts": {

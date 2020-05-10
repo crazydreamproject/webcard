@@ -1,7 +1,7 @@
 {
-  "name": "webcard-frontend",
+  "name": "webcard-develop",
   "version": "1.0.0",
-  "description": "Front end of webcard",
+  "description": "Developing tool of webcard",
   "sideEffects": [
     "*.css"
   ],
@@ -14,7 +14,15 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crazydreamproject/webcard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/crazydreamproject/webcard/issues"
+  },
+  "homepage": "https://github.com/crazydreamproject/webcard#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
