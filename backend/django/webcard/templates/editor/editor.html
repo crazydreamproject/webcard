@@ -1,0 +1,17 @@
+{% extends "editor/subwindow.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}WebCard Script Editor{% endblock title %}
+
+{% block content %}
+{% csrf_token %}
+{% endblock content %}
+
+{% block javascript %}
+    {% if settings.WEBPACK_DEV_SERVER %}
+        <script type="text/javascript" src="http://host.docker.internal:8181/editor.bundle.js"></script>
+    {% else %}
+        {% render_bundle 'editor' %}
+    {% endif %}
+{% endblock javascript %}

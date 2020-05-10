@@ -1,0 +1,17 @@
+{% extends "editor/subwindow.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}WebCard Message Box{% endblock title %}
+
+{% block content %}
+{% csrf_token %}
+{% endblock content %}
+
+{% block javascript %}
+    {% if settings.WEBPACK_DEV_SERVER %}
+        <script type="text/javascript" src="http://host.docker.internal:8181/msgbox.bundle.js"></script>
+    {% else %}
+        {% render_bundle 'msgbox' %}
+    {% endif %}
+{% endblock javascript %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}WebCard Editor: User: {{ User }}{% endblock title %}
+
+{% block content %}
+    <!-- to setup and end spinner -->
+<!--
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div id="nowloading" class="d-flex align-items-center p-5">
+        <strong>Loading...</strong>
+        <div class="spinner-border text-secondary ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+-->
+<!-- src="{% static 'editor/index.html' %}"
+    <iframe id="editorFrame" height="100%" width="100%" frameborder="0" scrolling="no" class="m-0 p-0"
+            style="position:relative; top:0px; left:0px; right:0px; bottom:0px; "
+            src="../../templates/editor/child.html"
+            onload="stopLoading();"
+            >
+        (Please enable iframe)
+    </iframe>
+-->
+    {% csrf_token %}
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        /*
+        function stopLoading() {
+            $('#nowloading').removeClass('d-flex'); // this prevents from hide()...
+            $('#nowloading').hide();
+        }
+        // adjust frame
+        $('#editorFrame').height($(window).height() - $("#HomeMenuBar").height() - 8); // humm, still something to subtract
+        $('#editorFrame').width($(window).width());
+        $(window).on('load', function() {
+            stopLoading();
+        });
+        */
+        // hilite "Develop" nav.
+        //$(".nav-item").removeClass("active");
+        //$("#navEditor").addClass("active");
+        // above compatible non jQuery. (script tag with jquery will prevent editor app from working...)
+        var els = document.getElementById("navbarSupportedContent").getElementsByClassName("nav-item");
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.remove("active");
+        }
+        document.getElementById("navEditor").classList.add("active");
+    </script>
+    {% if settings.WEBPACK_DEV_SERVER %}
+        <script type="text/javascript" src="http://host.docker.internal:8181/app.bundle.js"></script>
+    {% else %}
+        {% render_bundle 'app' %}
+    {% endif %}
+    <script>
+        {% if User.is_anonymous %}
+        console.log("Anonymous User");
+        {% else %}
+        // setup frontend server info
+        console.log(WebCard);
+        console.log(typeof WebCard);
+        console.log(WebCard.WcRemote);
+        console.log(typeof WebCard.WcRemote);
+        console.log(typeof WebCard.WcRemote.setup);
+        WebCard.WcRemote.setup({
+            userName: "{{ User }}",
+            ApiUrl: "{{ ApiUrl }}"
+        });
+        {% endif %}
+    </script>
+
+{% endblock javascript %}

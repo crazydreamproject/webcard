@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container container-fluid p-5">
+        <h1 class="display-4">Concept</h1>
+        <p class="lead">Stack, Cards and Backgrounds</p>
+        <hr class="my-4">
+        <p>
+        WebCard has basic concept of "Card", where you can draw picture, locate buttons and text fields. Think if it as a canvas to play with.
+        You can create multiple cards and go forth or backword by pressing right and left arrow key. All of those cards you created is bundled as a "Stack".
+        You can save and load your stack from "File" pull-down menu. You can also group cards with "Background".
+        Picture, buttons and text fields in background is shared and displayed on cards having same background.
+        </p>
+        <p class="lead">Buttons and Text Fields</p>
+        <hr class="my-4">
+        <p>
+        Button and text field (or just field) are object where users can interact with. You can create new button or field from "Objects" pull-down menu.
+        Buttons and fields have style you can change by double-click specific button or field. You can write script for specific button and field to
+        do what you want, like going to next card when "Next" button is pressed.
+        </p>
+        <p class="lead">Browse and Edit Mode</p>
+        <hr class="my-4">
+        <p>
+        In "Tools" pallete, you can find "Browse" and "Edit" button on the top. On Edit mode, you can move buttons and fields around in card and edit by 
+        double-clicking it. On "Browse" mode, buttons and fields are sticked and will not move, and clicking button will fire the script you wrote for that button.
+        </p>
+        <hr class="my-4">
+        <p>
+        That's about it, have fun to start playing with WebCard by pressing "Develop" tab on the top!
+        </p>
+        <h1 class="display-4">Tutorial</h1>
+        <p class="lead">! Under construction.</p>
+        <br>
+        <h1 class="display-4">Scripting</h1>
+        <p class="lead">How it works</p>
+        <hr class="my-4">
+        <p>
+        Script is attached to object, like button, field, card, background and stack. Double click button or field object, or select Info... from
+        "Object" pull-down menu to find Script button to start writing script. Script begins with "on" keyword, followed by event message, and ends
+        with "end" keyword followed by same event message. Below is an example of script to run when mouse is clicked up on object.
+        <pre><code>
+    on mouseUp
+        go next card
+    end mouseUp
+        </code></pre>
+        Event message is a message sent to object. Here is list of event messages.
+        </p>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">message name</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>mouseDown</td>
+                    <td>When mouse button is pressed</td>
+                </tr>
+                <tr>
+                    <td>mouseStillDown</td>
+                    <td>When mouse button is long pressed</td>
+                </tr>
+                <tr>
+                    <td>mouseUp</td>
+                    <td>When mouse button is pressed and released</td>
+                </tr>
+                <tr>
+                    <td>mouseDoubleClick</td>
+                    <td>When mouse button is double clicked</td>
+                </tr>
+                <tr>
+                    <td>mouseEnter</td>
+                    <td>When mouse cursor is moved into object</td>
+                </tr>
+                <tr>
+                    <td>mouseLeave</td>
+                    <td>When mouse cursor is moved out of object</td>
+                </tr>
+                <tr>
+                    <td>mouseWithin</td>
+                    <td>When mouse cursor is within the object</td>
+                </tr>
+                <tr>
+                    <td>arrowKey</td>
+                    <td>When arrow key is pressed. It takes one argument containing pressed key direction.</td>
+                </tr>
+                <tr>
+                    <td>keyDown</td>
+                    <td>When any keyboard key is pressed</td>
+                </tr>
+                <tr>
+                    <td>commandKeyDown</td>
+                    <td>When control key is pressed</td>
+                </tr>
+                <tr>
+                    <td>returnKey</td>
+                    <td>When Return key is pressed</td>
+                </tr>
+                <tr>
+                    <td>enterKey</td>
+                    <td>When Enter key is pressed</td>
+                </tr>
+                <tr>
+                    <td>tabKey</td>
+                    <td>When Tab key is pressed</td>
+                </tr>
+                <tr>
+                    <td>openCard</td>
+                    <td>When moving into card</td>
+                </tr>
+                <tr>
+                    <td>closeCard</td>
+                    <td>When moving out to other card</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        Event message is first passed to current card's button or field if applicable, and then it is passed to current card,
+        current background and finally to current stack, if none of them grabbed and run that specific message handler.
+        </p>
+        <p>
+        Script block, sandwitched by "on" &lt;message&gt; and "end" &lt;message&gt; is called message handler.
+        You can write multiple message handlers in one script, like below.
+        <pre><code>
+    on mouseEnter
+       set name of me to "Mouse Inside"
+    end mouseEnter
+    on mouseLeave
+        set name of me to "Mouse Outside"
+    end mouseLeave
+        </code></pre>
+        If there are same messages, only the first message handler will run.
+        </p>
+        <p class="lead">Commands in script</p>
+        <hr class="my-4">
+        <p>
+        Within the message handler, you can write commands to execute. See Scripting Reference for list of commands.
+        Commands are executed from top line to bottom line sequentially, one at a time. You can modify this sequential flow by
+        "if" and "repeat" keyword.
+        </p>
+        <p>
+        The "if" followed by conditional expression, and "then" will first evaluate that condition and if true,
+        will go through list of commands in between "if" and "else" or "end if". If condition was false, then
+        command lists between "else" and "end if" will be executed, if any. Example:
+        <pre><code>
+    if field "name" is empty then
+        ask "What is your name ?"
+    end if
+
+    if field "result" is "win" then
+        show button "win"
+    else
+        show button "lose"
+    end if
+        </code></pre>
+        </p>
+        <p>
+        You can repeat block of commands, using "repeat" keyword. For example:
+        <pre><code>
+    repeat 3 times
+        beep
+    end repeat
+
+    repeat with x = 1 to 5
+        put x*x into line x of field 1
+    end repeat
+        </code></pre>
+        (more to come about repeat)
+        </p>
+        <p>
+        When message handler reaches end of commands, message handler is done, and event message is consumed.
+        However if you use "pass" keyword, it will quit the command execution in current message handler, and send event massage to next object applicable.
+        </p>
+        <h1 class="display-4">Scripting Reference</h1>
+        <p class="lead">Abbreviation</p>
+        <hr class="my-4">
+        <p>
+        Some keyword can be abbreviated.
+        </p>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Keyword</th>
+                    <th scope="col">Abberbiated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>card</td>
+                    <td>cd</td>
+                </tr>
+                <tr>
+                    <td>background</td>
+                    <td>bg</td>
+                </tr>
+                <tr>
+                    <td>button</td>
+                    <td>btn</td>
+                </tr>
+                <tr>
+                    <td>field</td>
+                    <td>fld</td>
+                </tr>
+                <tr>
+                    <td>previous</td>
+                    <td>prev</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="lead">Clause</p>
+        <hr class="my-4">
+        <p>
+        Expression notation of clause, used in command reference is as follows:
+        </p>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Clause</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&lt;selecter_pointer&gt;</td>
+                    <td>first, last, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth</td>
+                </tr>
+                <tr>
+                    <td>&lt;direction_pointer&gt;</td>
+                    <td>next, prev</td>
+                </tr>
+                <tr>
+                    <td>&lt;frame_pointer&gt;</td>
+                    <td>this</td>
+                </tr>
+                <tr>
+                    <td>&lt;navigation_pointer&gt;</td>
+                    <td>&lt;selecter_pointer&gt; or &lt;direction_pointer&gt; or &lt;frame_pointer&gt;</td>
+                </tr>
+                <tr>
+                    <td>&lt;card_object_clause&gt;</td>
+                    <td>&lt;navigation_pointer&gt; or &lt;navigation_pointergt&gt; card or card &lt;expr&gt; or card id &lt;expr&gt;</td>
+                </tr>
+                <tr>
+                    <td>&lt;expr&gt;</td>
+                    <td>number literal or string literal or constant or variable or &lt;property&gt; or &lt;container&gt;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="lead">Navigation Commands</p>
+        <hr class="my-4">
+        <h4 class="">go</h4>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">syntax</th>
+                    <th scope="col">example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>go [to] &lt;card object clause&gt;</td>
+                    <td>go to next, go card "shop", go cd 3</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        </p>
+        <h4 class="">push</h4>
+        <h4 class="">pop</h4>
+        <h4 class="">help</h4>
+        <h4 class="">arrow key</h4>
+        <p class="lead">Action Commands</p>
+        <hr class="my-4">
+        <h4 class="">put</h4>
+        <h4 class="">delete</h4>
+        <h4 class="">enable</h4>
+        <h4 class="">disable</h4>
+        <h4 class="">choose</h4>
+        <h4 class="">click at</h4>
+        <h4 class="">drag from</h4>
+        <h4 class="">type</h4>
+        <p class="lead">Sound Commands</p>
+        <hr class="my-4">
+        <h4 class="">beep</h4>
+        <h4 class="">play</h4>
+        <h4 class="">play stop</h4>
+        <h4 class="">speak</h4>
+        <h4 class="">stop speach</h4>
+        <p class="lead">Arithmatic Commands</p>
+        <hr class="my-4">
+        <h4 class="">add</h4>
+        <h4 class="">subtract</h4>
+        <h4 class="">multiply</h4>
+        <h4 class="">divide</h4>
+        <!-- Search Commands -->
+        <p class="lead">Display Commands</p>
+        <hr class="my-4">
+        <h4 class="">visual</h4>
+        <h4 class="">flash</h4>
+        <h4 class="">answer</h4>
+        <h4 class="">ask</h4>
+        <h4 class="">lock screen</h4>
+        <h4 class="">unlock screen</h4>
+        <p class="lead">Object Manipulation Commands</p>
+        <hr class="my-4">
+        <h4 class="">get</h4>
+        <h4 class="">hide</h4>
+        <h4 class="">show</h4>
+        <p class="lead">File Commands</p>
+        <hr class="my-4">
+        <h4 class="">open</h4>
+        <h4 class="">close</h4>
+        <h4 class="">read from file</h4>
+        <h4 class="">write to file</h4>
+        <h4 class="">print</h4>
+        <p class="lead">Menu Commands</p>
+        <hr class="my-4">
+        <h4 class="">do menu</h4>
+        <h4 class="">create menu</h4>
+        <h4 class="">delete</h4>
+        <h4 class="">reset menubar</h4>
+        <h4 class="">enable</h4>
+        <h4 class="">disable</h4>
+        <p class="lead">Printing Commands</p>
+        <hr class="my-4">
+        <h4 class="">open printing</h4>
+        <h4 class="">close printing</h4>
+        <h4 class="">print</h4>
+        <h4 class="">reset print</h4>
+        <p class="lead">Script Commands</p>
+        <hr class="my-4">
+        <h4 class="">wait</h4>
+        <h4 class="">wait until</h4>
+        <h4 class="">exit</h4>
+        <h4 class="">lock messages</h4>
+        <h4 class="">unlock messages</h4>
+        <h4 class="">start using</h4>
+        <h4 class="">stop using</h4>
+    </div>
+
+{% endblock content %}
+
+{% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        // hilite "Documents" nav.
+        $(".nav-item").removeClass("active");
+        $("#navDocuments").addClass("active");
+    </script>
+{% endblock javascript %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid p-5 m-5">
+        <h1 class="display-4">Welcome to WebCard!</h1>
+        <p class="lead">An authoring environment for all of us.</p>
+        <hr class="my-4">
+        <p>Visit the Documents tab for concenpt, tutorial and scripting reference.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'documents' %}" role="button">Start Exploring</a>
+    </div>
+{% endblock content %}
