@@ -110,11 +110,11 @@ module.exports = (env, argv) => {
             }),
             new webpack.BannerPlugin(`[name] v${version} Copyleft(c) 2020`),
             /* FIXME: this emits Error: EEXIST: file already exists, mkdir at BundleTrackerPlugin._writeOutput()
+               - reverted webpack-bundle-tracker to 0.4.3 version. */
             new BundleTracker({
                 path: __dirname,
                 filename: './webpack-stats.json'
             }),
-            */
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
