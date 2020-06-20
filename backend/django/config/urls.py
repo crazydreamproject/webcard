@@ -13,9 +13,9 @@ urlpatterns = [
     path(
         "documents/", TemplateView.as_view(template_name="pages/documents.html"), name="documents"
     ),
-    path(
-        "publish/", TemplateView.as_view(template_name="pages/publish.html"), name="publish"
-    ),
+    #path(
+    #    "publish/", TemplateView.as_view(template_name="pages/publish.html"), name="publish"
+    #),
     path(
         "market/", TemplateView.as_view(template_name="pages/market.html"), name="market"
     ),
@@ -26,6 +26,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("editor/", include("webcard.editor.urls", namespace="editor")),
+    path("packages/", include("webcard.packages.urls", namespace="packages")),
     path("api/", include("webcard.stacks.urls", namespace="api")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

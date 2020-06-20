@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}WebCard Publish: User: {{ User }}{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+        var els = document.getElementById("navbarSupportedContent").getElementsByClassName("nav-item");
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.remove("active");
+        }
+        document.getElementById("navPublish").classList.add("active");
+    </script>
+    {% if settings.WEBPACK_DEV_SERVER %}
+        <script type="text/javascript" src="http://host.docker.internal:8182/app.bundle.js"></script>
+    {% else %}
+        {% render_bundle 'app' %}
+    {% endif %}
+    <script>
+        {% if User.is_anonymous %}
+        console.log("Anonymous User");
+        {% else %}
+        // setup frontend server info
+        console.log(WebCardPublish);
+        console.log(typeof WebCardPublish);
+        //WebCardPublish.WcRemote.setup({
+        //    userName: "{{ User }}",
+        //    ApiUrl: "{{ ApiUrl }}"
+        //});
+        {% endif %}
+    </script>
+{% endblock javascript %}

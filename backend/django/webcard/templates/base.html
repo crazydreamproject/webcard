@@ -56,10 +56,10 @@
               <a class="nav-link" href="{% url 'editor:index' %}">Develop</a>
             </li>
             <li class="nav-item" id="navPublish">
-              <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+              <a class="nav-link" href="{% url 'packages:publish' %}">Publish</a>
             </li>
             <li class="nav-item" id="navMarket">
-              <a class="nav-link" href="{% url 'market' %}">Market</a>
+              <a class="nav-link" href="{% url 'packages:market' %}">Market</a>
             </li>
           </ul>
             {% if request.user.is_authenticated %}

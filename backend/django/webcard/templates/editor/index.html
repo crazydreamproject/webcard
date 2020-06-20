@@ -62,12 +62,12 @@
         console.log("Anonymous User");
         {% else %}
         // setup frontend server info
-        console.log(WebCard);
-        console.log(typeof WebCard);
-        console.log(WebCard.WcRemote);
-        console.log(typeof WebCard.WcRemote);
-        console.log(typeof WebCard.WcRemote.setup);
-        WebCard.WcRemote.setup({
+        console.log(WebCardDevelop);
+        console.log(typeof WebCardDevelop);
+        console.log(WebCardDevelop.WcRemote);
+        console.log(typeof WebCardDevelop.WcRemote);
+        console.log(typeof WebCardDevelop.WcRemote.setup);
+        WebCardDevelop.WcRemote.setup({
             userName: "{{ User }}",
             ApiUrl: "{{ ApiUrl }}"
         });
