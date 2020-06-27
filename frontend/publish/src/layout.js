@@ -2,9 +2,15 @@
  * layout.js: Set components to body
  */
 
-function setupElements() {
+const containerId = "MainFrame";
+const develTableId = "TbodyDevelop";
+const stageDeckId = "StagingCardDeck";
+const publishDeckId = "PublishedCardDeck";
+const helpDocCls = "help_document";
+
+let setupElements = () => {
     $('body')
-    .append($('<div>', { "class": "container", "id": "MainFrame" })
+    .append($('<div>', { "class": "container", "id": containerId })
         .append($('<hr>'))
         .append($('<h1>', { "class": "" })
             .append($('<span>', { "class": "badge badge-primary" }).text("　"))
@@ -21,7 +27,7 @@ function setupElements() {
                     .append($('<th>', { "scope": "col" }).text("Action"))
                 )
             )
-            .append($('<tbody>', { "class": "", "id": "TbodyDevelop" }) // below <tr>s are inserted for test, will be removed by update.
+            .append($('<tbody>', { "class": "", "id": develTableId }) // below <tr>s are inserted for test, will be removed by update.
                 .append($('<tr>')
                     .append($('<th>', { "scope": "row" }).text("1"))
                     .append($('<td>').text("Awesome game"))
@@ -54,7 +60,8 @@ function setupElements() {
                 )
             )
         )
-        .append($('<p>')
+        .append($('<br>'))
+        .append($('<p>', { "class": helpDocCls + " " + helpDocCls + "_develop" })
             .append($('<span>').text("Press "))
             .append($('<button>', { "class": "btn btn-warning"}).text("Stage"))
             .append($('<span>').text(" button in above table to setup package data and proceed to rehearsal stage testing."))
@@ -66,7 +73,7 @@ function setupElements() {
         )
         //.append($('<div>', { "class": "card-deck", "id": "StagingCardDeck" }) // card-deck will not reflect width css of card...
         // using container-fluid + row + col-auto had demerit of footer not aligning to each cards...
-        .append($('<div>', { "class": "container-fluid mt-4", "id": "StagingCardDeck" })
+        .append($('<div>', { "class": "container-fluid mt-4", "id": stageDeckId })
             .append($('<div>', { "class": "row" })
                 .append($('<div>', { "class": "col-auto mb-3" })
                     .append($('<div>', { "class": "card bg-light", "style": "width: 20rem;" })
@@ -122,7 +129,7 @@ function setupElements() {
             )
         )
         .append($('<br>'))
-        .append($('<p>')
+        .append($('<p>', { "class": helpDocCls + " " + helpDocCls + "_stage" })
             .append($('<span>').text("Press "))
             .append($('<button>', { "class": "btn btn-primary"}).text("Develop"))
             .append($('<span>').text(" to go back to develiping, "))
@@ -138,7 +145,7 @@ function setupElements() {
             .append($('<span>').text(" Published"))
         )
         //.append($('<div>', { "class": "container", "id": "PublishedCardDeck" }) // card-deck will not reflect width css of card...
-        .append($('<div>', { "class": "container-fluid mt-4", "id": "PublishedCardDeck" })
+        .append($('<div>', { "class": "container-fluid mt-4", "id": publishDeckId })
             .append($('<div>', { "class": "row" })
                 .append($('<div>', { "class": "col-auto mb-3" })
                     .append($('<div>', { "class": "card bg-light", "style": "width: 20rem;" })
@@ -173,7 +180,7 @@ function setupElements() {
             )
         )
         .append($('<br>'))
-        .append($('<p>')
+        .append($('<p>', { "class": helpDocCls + " " + helpDocCls + "_publish" })
             .append($('<span>').text("Press "))
             .append($('<button>', { "class": "btn btn-warning"}).text("Stage"))
             .append($('<span>').text(" in above card to push back to staging from market"))
@@ -182,10 +189,21 @@ function setupElements() {
     );
 }
 
-function setup() {
-    setupElements();
+class Layout {
+    constructor() {
+        this.ids = {
+            container: '#' + containerId,
+            develTable: '#' + develTableId,
+            stageDeck: '#' + stageDeckId,
+            publishDeck: '#' + publishDeckId,
+        };
+        this.classes = {
+            helpDoc: '.' + helpDocCls,
+        };
+    }
+    setup() {
+        setupElements();
+    }
 }
 
-export default {
-    setup: setup,
-};
+export default new Layout();

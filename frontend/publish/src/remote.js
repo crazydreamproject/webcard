@@ -8,7 +8,7 @@ class Remote {
         this.userName = null;
         this.apiUrl = null;
         this.userData = null;
-        this.lazycall = [];
+        this.lazycall_ = [];
     }
     setup(json) {
         this.userName = json.userName;
@@ -20,8 +20,9 @@ class Remote {
                 if ($.isArray(data.results)) {
                     this.userData = data.results[0];
                     /* now pop all lazycalls pushed during setup to now. */
+                    // console.log("flushing lazy calls");
                     let f;
-                    while((f = this.lazycall.pop()) != null) {
+                    while((f = this.lazycall_.pop()) != null) {
                         f();
                     }
                 }
@@ -29,10 +30,10 @@ class Remote {
         });
     }
     loggedIn() {
-        if (!this.userName) {
-            return false;
-        } else {
+        if (this.userName) {
             return true;
+        } else {
+            return false;
         }
     }
     getMyData() {
@@ -54,7 +55,7 @@ class Remote {
             });
         };
         if (!this.userData) {
-            this.lazycall.push(getnow);
+            this.lazycall_.push(getnow);
         } else {
             getnow();
         }
@@ -76,11 +77,14 @@ class Remote {
             });
         };
         if (!this.userData) {
-            this.lazycall.push(getnow);
+            this.lazycall_.push(getnow);
         } else {
             getnow();
         }
         return true;
+    }
+    lazyCall(callback) {
+        this.lazycall_.push(callback);
     }
 }
 
