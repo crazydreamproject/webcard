@@ -25,21 +25,26 @@ class Update {
     }
     render() {
         const login = remote.loggedIn();
-        if (!login) {
-            $(layout.ids.container)
-            .empty()
-            .append('<br>')
-            .append($('<div>', { "class": "alert alert-danger", "role": "alert" })
-                .append($('<h1>').text("You must Login first!"))
-            );
-            return;
-        }
         // cleanup
         $(layout.ids.develTable).empty();
         $(layout.ids.stageDeck).empty();
         $(layout.ids.publishDeck).empty();
         $(layout.classes.helpDoc).hide();
-        // update
+        // alert login
+        if (!login) {
+            $(layout.ids.container)
+            .before($('<div>', { "class": "alert alert-danger", "role": "alert" })
+                .append($('<h1>').text("You must Login first!"))
+            );
+            $(".table").hide();
+            // call me again after server communication, if any.
+            remote.lazyCall(this.render);
+            return;
+        }
+        // undo alert login
+        $(".table").show();
+        $(".alert-danger").remove();
+        // update with server info
         const updateStack = (results) => {
             tmpMyStacks = results;
             results.forEach(stack => {

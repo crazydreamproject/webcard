@@ -8,6 +8,6 @@ import remote from './remote.js';
 import update from './update.js';
 
 layout.setup();
-remote.lazyCall(update.render);
+update.render();
 
 export const WcRemote = remote;
