@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'material-icons/iconfont/material-icons.css';
 
 import layout from './layout.js';
+import remote from './remote.js';
 
 layout.setup();
-console.log("index.js");
+
+export const WcRemote = remote;
