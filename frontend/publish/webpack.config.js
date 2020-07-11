@@ -15,7 +15,6 @@ module.exports = (env, argv) => {
         devServer: {
             contentBase: './dist',
             hot: true,
-            disableHostCheck: true,
             //open: true,
             open: false,
             //openPage: './dist/index.html',

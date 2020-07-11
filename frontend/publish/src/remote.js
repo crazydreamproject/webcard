@@ -9,6 +9,8 @@ class Remote {
         this.apiUrl = null;
         this.userData = null;
         this.lazycall_ = [];
+        this.cachedStacks = null;
+        this.cachedPackages = null;
     }
     setup(json) {
         this.userName = json.userName;
@@ -48,6 +50,7 @@ class Remote {
             const stacksUrl = this.apiUrl + "stacks/?author=" + this.userData.id;
             $.get(stacksUrl, (data, status) => {
                 if (status === "success") {
+                    this.cachedStacks = data.results;
                     cb(data.results);
                 } else {
                     cb(null);
@@ -70,6 +73,7 @@ class Remote {
             const stacksUrl = this.apiUrl + "packages/?author=" + this.userData.id;
             $.get(stacksUrl, (data, status) => {
                 if (status === "success") {
+                    this.cachedPackages = data.results;
                     cb(data.results);
                 } else {
                     cb(null);
@@ -82,6 +86,55 @@ class Remote {
             getnow();
         }
         return true;
+    }
+    getCachedStacks() {
+        return this.cachedStacks;
+    }
+    getCachedPackages() {
+        return this.cachedPackages;
+    }
+    postPackage(formData) {
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+        let pkgName = formData.get('name');
+        $.ajaxSetup({
+            beforeSend: (xhr, settings) => {
+                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf);
+                }
+            }
+        });
+        // do 2 things: post package and update stack status from develop to staging
+        let pkgUrl = this.apiUrl + "packages/";
+        $.ajax({
+            type: "POST",
+            url: pkgUrl,
+            dataType: 'text',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+        }).done((data) => {
+            let stackUrl = this.apiUrl + "stacks/" + formData.get('stack') + '/';
+            $.ajax({
+                type: "PATCH",
+                url: stackUrl,
+                dataType: 'json',
+                data: {
+                    status: "testing" // now this stack has moved to staging (humm todo: change stacks/models.py to staging...)
+                }
+            }).done((data) => {
+                alert("Successful transition to staging of package: " + pkgName);
+            }).fail((data) => {
+                alert("FAIL: transition to staging of package: " + pkgName);
+            }).always((data) => {
+                //
+            });
+
+        }).fail((req, status, err) => {
+            alert("FAIL: POST of package: " + pkgName + ", " + err + ": " + req.responseText);
+        }).always((data)=>{
+            //
+        });
     }
     lazyCall(callback) {
         this.lazycall_.push(callback);

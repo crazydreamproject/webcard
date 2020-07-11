@@ -6,9 +6,40 @@ const containerId = "MainFrame";
 const develTableId = "TbodyDevelop";
 const stageDeckId = "StagingCardDeck";
 const publishDeckId = "PublishedCardDeck";
+const modalId = "ModalTop";
+const modalFormId = "modalForm";
 const helpDocCls = "help_document";
 
 let setupElements = () => {
+    // modal to manipulate staging/publishing
+    $('body')
+    .append($('<div>', { "class": "modal fade", "tabindex": "-1", "role": "dialog", "id": modalId })
+        .append($('<div>', { "class": "modal-dialog", "role": "document" })
+            .append($('<div>', { "class": "modal-content" })
+                .append($('<div>', { "class": "modal-header" })
+                    .append($('<h5>', { "class": "modal-title" }).text("Modal title"))
+                    .append($('<button>', { "class": "close", "type": "button", "data-dismiss": "modal", "aria-label": "Close" })
+                        .append($('<span>', { "aria-hidden": "true" }).html("&times;"))
+                    )
+                )
+                .append($('<div>', { "class": "modal-body" })
+                    .append($('<div>', { "class": "container-fluid" })
+                        .append($('<form>', { "id": modalFormId })
+                            .append($('<div>', { "class": "form-group row"}) // this is just a sample. will be overwritten.
+                                .append($('<label>', { "class": "col-3 col-form-label", "for": "inputName"}).text("Name"))
+                                .append($('<input>', { "class": "col-9 form-control", "id": "inputName"}).text("your name here"))
+                            )
+                        )
+                    )
+                )
+                .append($('<div>', { "class": "modal-footer" })
+                    .append($('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
+                    .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": "modalForm"}).text("Submit"))
+                )
+            )
+        )
+    );
+    // main container view
     $('body')
     .append($('<div>', { "class": "container", "id": containerId })
         .append($('<hr>'))
@@ -196,6 +227,8 @@ class Layout {
             develTable: '#' + develTableId,
             stageDeck: '#' + stageDeckId,
             publishDeck: '#' + publishDeckId,
+            modal: '#' + modalId,
+            modalForm: '#' + modalFormId,
         };
         this.classes = {
             helpDoc: '.' + helpDocCls,
