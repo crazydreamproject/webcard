@@ -30,6 +30,14 @@ class Remote {
                 }
             }
         });
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+        $.ajaxSetup({
+            beforeSend: (xhr, settings) => {
+                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf);
+                }
+            }
+        });
     }
     loggedIn() {
         if (this.userName) {
@@ -93,9 +101,9 @@ class Remote {
     getCachedPackages() {
         return this.cachedPackages;
     }
-    postPackage(formData) {
+    postPackage(stk, formData) {
+        /*
         let csrf = $("[name=csrfmiddlewaretoken]").val();
-        let pkgName = formData.get('name');
         $.ajaxSetup({
             beforeSend: (xhr, settings) => {
                 if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
@@ -103,7 +111,9 @@ class Remote {
                 }
             }
         });
+        */
         // do 2 things: post package and update stack status from develop to staging
+        let pkgName = formData.get('name');
         let pkgUrl = this.apiUrl + "packages/";
         $.ajax({
             type: "POST",
@@ -114,13 +124,17 @@ class Remote {
             contentType: false,
             processData: false,
         }).done((data) => {
+            // stk.status is set by caller from develop to staging. just put it.
+            this.putStackStatus(stk);
+            // maybe change to call this.putStackStatus()...
+            /*
             let stackUrl = this.apiUrl + "stacks/" + formData.get('stack') + '/';
             $.ajax({
                 type: "PATCH",
                 url: stackUrl,
                 dataType: 'json',
                 data: {
-                    status: "testing" // now this stack has moved to staging (humm todo: change stacks/models.py to staging...)
+                    status: "staging"
                 }
             }).done((data) => {
                 alert("Successful transition to staging of package: " + pkgName);
@@ -129,13 +143,62 @@ class Remote {
             }).always((data) => {
                 //
             });
-
+            */
         }).fail((req, status, err) => {
             alert("FAIL: POST of package: " + pkgName + ", " + err + ": " + req.responseText);
         }).always((data)=>{
             //
         });
     }
+    putPackage(stk, pkg, formData) {
+        let pkgName = formData.get('name');
+        let pkgUrl = this.apiUrl + "packages/" +  pkg.id + '/';
+        console.log(...formData);
+        $.ajax({
+            type: "PATCH", // actually PATCH instead of PUT since formdata might lack some fields.
+            url: pkgUrl,
+            dataType: 'text',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+        }).done((data) => {
+            // stk.status is set by caller from develop to staging. just put it.
+            this.putStackStatus(stk);
+        }).fail((req, status, err) => {
+            alert("FAIL: PUT of package: " + pkgName + ", " + err + ": " + req.responseText);
+        }).always((data)=>{
+            //
+        });
+    }
+    putStackStatus(stk) {
+        /*
+        let csrf = $("[name=csrfmiddlewaretoken]").val();
+        $.ajaxSetup({
+            beforeSend: (xhr, settings) => {
+                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf);
+                }
+            }
+        });
+        */
+        let stackUrl = this.apiUrl + "stacks/" + stk.id + '/';
+        $.ajax({
+            type: "PATCH",
+            url: stackUrl,
+            dataType: 'json',
+            data: {
+                status: stk.status
+            }
+        }).done((data) => {
+            alert("Successful transition to " + stk.status + " of stack: " + stk.title);
+        }).fail((data, status, err) => {
+            alert("FAIL: transition to " + stk.status + ", " + err + ": " + data.responseText);
+        }).always((data) => {
+            //
+        });
+    }
+
     lazyCall(callback) {
         this.lazycall_.push(callback);
     }

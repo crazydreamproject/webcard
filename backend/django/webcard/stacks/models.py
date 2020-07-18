@@ -9,11 +9,11 @@ User = get_user_model()
 class Stack(models.Model):
     # list of states
     STATUS_DEVELOP = "develop"
-    STATUS_TESTING = "testing"
+    STATUS_TESTING = "staging"
     STATUS_PUBLISH = "publish"
     STATUS_SET = (
         (STATUS_DEVELOP, "Under Development"),
-        (STATUS_TESTING, "Under Testing"),
+        (STATUS_TESTING, "Under Staging"),
         (STATUS_PUBLISH, "Published"),
     )
     # name of this stack
