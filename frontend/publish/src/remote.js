@@ -78,8 +78,8 @@ class Remote {
         }
         let getnow = () => {
             let cb = callback; // responsibility of caller to pass valid function
-            const stacksUrl = this.apiUrl + "packages/?author=" + this.userData.id;
-            $.get(stacksUrl, (data, status) => {
+            const packagesUrl = this.apiUrl + "packages/?author=" + this.userData.id;
+            $.get(packagesUrl, (data, status) => {
                 if (status === "success") {
                     this.cachedPackages = data.results;
                     cb(data.results);

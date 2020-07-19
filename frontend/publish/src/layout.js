@@ -104,7 +104,7 @@ let setupElements = () => {
         )
         //.append($('<div>', { "class": "card-deck", "id": "StagingCardDeck" }) // card-deck will not reflect width css of card...
         // using container-fluid + row + col-auto had demerit of footer not aligning to each cards...
-        .append($('<div>', { "class": "container-fluid mt-4", "id": stageDeckId })
+        .append($('<section>', { "class": "text-center mb-4", "id": stageDeckId })
             .append($('<div>', { "class": "row" })
                 .append($('<div>', { "class": "col-auto mb-3" })
                     .append($('<div>', { "class": "card bg-light", "style": "width: 20rem;" })
@@ -164,7 +164,7 @@ let setupElements = () => {
             .append($('<span>').text("Press "))
             .append($('<button>', { "class": "btn btn-primary"}).text("Develop"))
             .append($('<span>').text(" to go back to develiping, "))
-            .append($('<button>', { "class": "btn btn-warning"}).text("Update"))
+            .append($('<button>', { "class": "btn btn-warning"}).text("Modify"))
             .append($('<span>').text(" to modify, "))
             .append($('<button>', { "class": "btn btn-danger"}).text("Publish"))
             .append($('<span>').text(" to publish your work to market in above card."))
@@ -176,7 +176,7 @@ let setupElements = () => {
             .append($('<span>').text(" Published"))
         )
         //.append($('<div>', { "class": "container", "id": "PublishedCardDeck" }) // card-deck will not reflect width css of card...
-        .append($('<div>', { "class": "container-fluid mt-4", "id": publishDeckId })
+        .append($('<section>', { "class": "text-center mb-4", "id": publishDeckId })
             .append($('<div>', { "class": "row" })
                 .append($('<div>', { "class": "col-auto mb-3" })
                     .append($('<div>', { "class": "card bg-light", "style": "width: 20rem;" })

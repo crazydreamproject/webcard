@@ -13,7 +13,7 @@ User = get_user_model()
 class PackageViewSet(viewsets.ModelViewSet):
     queryset = Package.objects.all()
     serializer_class = PackageSerializer
-    filter_fields = ('name', 'author', 'stack', )
+    filter_fields = ('name', 'author', 'stack', 'available', 'category')
     def get_queryset(self):
         # just show my stack list or anyone can see other's stacks!
         queryset = Package.objects.filter(author=self.request.user)

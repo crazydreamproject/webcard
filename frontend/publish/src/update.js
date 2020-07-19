@@ -21,41 +21,35 @@ const createTableRow = (idx, stk, pkg) => {
     );
 }
 
-const createCard = (stk, pkg) => {
-    return $('<div>', { "class": "col-auto mb-3" })
-    .append($('<div>', { "class": "card bg-light", "style": "width: 20rem;" })
-        .append($('<img>', { "src": pkg.image, "class": "card-img-top" }))
-        //.append($('<hr>'))
-        .append($('<div>', { "class": "card-body"})
-            .append($('<h5>', { "class": "card-title" }).text(pkg.name))
-            .append($('<p>', { "class": "card-text" }).text(pkg.description))
-            .append($('<hr>'))
-            .append($('<form>', { "class": "form" })
-                .append($('<div>', { "class": "form-group" })
-                    .append($('<div>', { "class": "input-group mb-3" })
-                        .append($('<div>', { "class": "input-group-prepend" })
-                            .append($('<span>', { "class": "input-group-text" }).text("Language"))
-                        )
-                        .append($('<label>', { "class": "sr-only" }).text("Language"))
-                        .append($('<input>', { "class": "form-control", "type": "text", "readonly": true, "value": pkg.metadata.lang }))
-                    )
-                )
-                .append($('<div>', { "class": "form-group" })
-                    .append($('<div>', { "class": "input-group" })
-                        .append($('<div>', { "class": "input-group-prepend" })
-                            .append($('<span>', { "class": "input-group-text" }).text("Above Age"))
-                        )
-                        .append($('<label>', { "class": "sr-only" }).text("Age"))
-                        .append($('<input>', { "class": "form-control", "type": "text", "readonly": true, "value": pkg.metadata.age }))
-                    )
-                )
+const createCard = (stk, pkg, status) => {
+    let card = $('<div>', { "class": "col-lg-3 col-md-6 mb-4" })
+    .append($('<div>', { "class": "card " })
+        .append($('<div>', { "class": "view overlay" })
+            .append($('<img>', { "src": pkg.image, "style": "width: 100%;" }))
+            .append($('<a>')
+                .append($('<div>', { "class": "mask rgba-white-slight" }))
             )
         )
+        .append($('<div>', { "class": "card-body text-center" })
+            .append($('<h5>')
+                .append($('<strong>')
+                    .append($('<a>', { "class": "dark-grey-text" }).text(pkg.name))
+                )
+            )
+            /*
+            .append($('<a>', { "class": "grey-text" })
+                .append($('<h5>').text(pkg.category))
+            )
+            */
+        )
+    );
+    if (status == "staging") {
+        card.find(".card")
         .append($('<div>', { "class": "card-footer"})
-            .append($('<button>', { "class": "btn btn-primary mr-2" }).text("Develop").click(()=>{
+            .append($('<button>', { "class": "btn btn-primary " }).text("Develop").click(()=>{
                 modal.develop(stk, pkg);
             }))
-            .append($('<button>', { "class": "ml-1 btn btn-warning mr-2" }).text("Update").click(()=>{
+            .append($('<button>', { "class": "ml-1 btn btn-warning " }).text("Modify").click(()=>{
                 modal.stage(stk, pkg);
             }))
             .append($('<button>', { "class": "ml-1 btn btn-danger" }).text("Publish").click(()=>{
@@ -63,8 +57,18 @@ const createCard = (stk, pkg) => {
             }))
             .append($('<hr>'))
             .append($('<p>').text("Updated: " + pkg.updated_at))
-        )
-    );
+        );
+    } else if (status == "publish") {
+        card.find(".card")
+        .append($('<div>', { "class": "card-footer"})
+            .append($('<button>', { "class": "ml-1 btn btn-warning" }).text("Stage").click(()=>{
+                modal.publish(stk, pkg);
+            }))
+            .append($('<hr>'))
+            .append($('<p>').text("Updated: " + pkg.updated_at))
+        );
+    } 
+    return card;
 }
 
 class Update {
@@ -116,14 +120,20 @@ class Update {
             }
         };
         const updateStaging = (stacks, packages) => {
-            let divtop = $('<div>', { "class": "row" });
+            let divtop = $('<div>');
+            let divrow = null;
             let count = 0;
             stacks.forEach(stk => {
+                // a row to contain 4 cards
+                if (count % 4 == 0) {
+                    divrow = $('<div>', { "class": "row wow fadeIn" });
+                    divtop.append(divrow);
+                }
                 // only list staging stacks to cards
                 if (stk.status === "staging") {
                     packages.forEach(pkg => {
                         if (pkg.stack === stk.id) {
-                            divtop.append(createCard(stk, pkg));
+                            divrow.append(createCard(stk, pkg, "staging"));
                             count++;
                         }
                     });
@@ -134,11 +144,37 @@ class Update {
                     $(layout.classes.helpDoc + "_stage").show();
             }
         }
+        const updatePublished = (stacks, packages) => {
+            let divtop = $('<div>');
+            let divrow = null;
+            let count = 0;
+            stacks.forEach(stk => {
+                // a row to contain 4 cards
+                if (count % 4 == 0) {
+                    divrow = $('<div>', { "class": "row wow fadeIn" });
+                    divtop.append(divrow);
+                }
+                // only list published stacks to cards
+                if (stk.status === "publish") {
+                    packages.forEach(pkg => {
+                        if (pkg.stack === stk.id) {
+                            divrow.append(createCard(stk, pkg, "publish"));
+                            count++;
+                        }
+                    });
+                }
+            });
+            if (count) {
+                $(layout.ids.publishDeck).append(divtop);
+                    $(layout.classes.helpDoc + "_publish").show();
+            }
+        }
         // we need both stacks and packages list, so cascade the call
         remote.getMyStacks((stacks)=>{
             remote.getMyPackages((packages)=>{
                 updateDevel(stacks, packages);
                 updateStaging(stacks, packages);
+                updatePublished(stacks, packages);
             });
         });
     }

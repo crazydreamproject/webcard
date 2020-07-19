@@ -34,13 +34,13 @@ class Modal {
         */
     }
     stage(stk, pkg) {
-        let name = pkg ? pkg.name : stk.title;
-        let version = pkg ? pkg.version : 1.0;
-        let desc = pkg ? pkg.description : "Explain your package here";
-        let srcimage = pkg ? pkg.image : null; // @todo: reuse image in server if pkg exists (remove required also)
+        let name = pkg != null ? pkg.name : stk.title;
+        let version = pkg != null ? pkg.version : 1.0;
+        let desc = pkg != null ? pkg.description : "Explain your package here";
+        let srcimage = pkg != null ? pkg.image : null; // @todo: reuse image in server if pkg exists (remove required also)
         //let srcimage = null;
-        let age = pkg ? pkg.metadata.age : 5;
-        let lang = pkg ? pkg.metadata.lang : "en";
+        let age = pkg != null ? pkg.metadata.age : 5;
+        let lang = pkg != null ? pkg.metadata.lang : "en";
         let form = $('<div>')
         .append($('<div>', { "class": "form-group row"})
             .append($('<label>', { "class": "col-form-label col-3", "for": "pkgName"}).text("Pkg Name: "))
@@ -140,9 +140,11 @@ class Modal {
             fd.append('description', desc);
             fd.append('image', file);
             fd.append('metadata', JSON.stringify(metadata));
+            fd.append('category', "playable");
+            fd.append('available', false);
 
             stk.status = "staging";
-            if (!pkg) {
+            if (pkg == null) {
                 remote.postPackage(stk, fd);
             } else {
                 // handle pkg.image properly, dont update if image file selected locally is empty
@@ -171,7 +173,7 @@ class Modal {
                     min: 0,
                 },
                 pkgImage: {
-                    required: pkg ? false : true,
+                    required: pkg != null ? false : true,
                     extension: 'png',
                     accept: 'image/png',
                 },
@@ -195,8 +197,42 @@ class Modal {
         setupModal("Staging", form, rules);
 
     }
-    publish() {
+    publish(stk, pkg) {
+        let form = $('<div>')
+        .append($('<div>', { "class": "form-group row"})
+            .append($('<label>', { "class": "col-form-label col-3", "for": "pkgName"}).text("Pkg Name: "))
+            .append($('<div>', { "class": "col-9" })
+                .append($('<input>', { "class": "form-control", "type": "text", "id": "pkgName", "name": "pkgName", "readonly": true, "value": pkg.name }))
+            )
+        )
+        .append($('<div>', { "class": "text-center"})
+            .append($('<img>', { "class": "center-block", "id": "pkgCover", "src": pkg.image }))
+        )
+        .append($('<div>', { "class": "form-group row"})
+                .append($('<label>', { "class": "col-form-label col-3", "for": "pkgPublish"}).text("Publish: "))
+            .append($('<div>', { "class": "col-9" })
+                .append($('<select>', { "class": "form-control", "id": "pkgPublish", "name": "pkgPublish" })
+                    .append($('<option>', { "value": false, "selected": true }).text("False"))
+                    .append($('<option>', { "value": true }).text("True"))
+                )
+            )
+        )
+        ;
 
+        let onSubmit = () => {
+            let available = $('#pkgPublish').val() === "true";
+            console.log(available);
+            console.log(typeof available);
+            let fd = new FormData();
+            fd.append('available', available);
+            stk.status = available ? "publish" : "staging";
+            remote.putPackage(stk, pkg, fd);
+            return true; // close modal and reload publish page
+        };
+        let rules = {
+            submitHandler: onSubmit,
+        };
+        setupModal("Publishing", form, rules);
     }
     develop(stk, pkg) {
         // tansition package from staging to developing. just update stack status, no change to package
