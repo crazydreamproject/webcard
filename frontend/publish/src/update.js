@@ -23,36 +23,30 @@ const createTableRow = (idx, stk, pkg) => {
 
 const createCard = (stk, pkg, status) => {
     let card = $('<div>', { "class": "col-lg-3 col-md-6 mb-4" })
-    .append($('<div>', { "class": "card " })
-        .append($('<div>', { "class": "view overlay" })
-            .append($('<img>', { "src": pkg.image, "style": "width: 100%;" }))
-            .append($('<a>')
-                .append($('<div>', { "class": "mask rgba-white-slight" }))
+    .append($('<div>', { "class": "card bg-light" })
+        .append($('<a>', { "href": "#" }).click(()=>{ modal.detail(stk, pkg); })
+            .append($('<div>', { "class": "view overlay" })
+                .append($('<img>', { "src": pkg.image, "style": "width: 100%;" }))
             )
-        )
-        .append($('<div>', { "class": "card-body text-center" })
-            .append($('<h5>')
-                .append($('<strong>')
-                    .append($('<a>', { "class": "dark-grey-text" }).text(pkg.name))
+            .append($('<div>', { "class": "card-body text-center" })
+                .append($('<h5>')
+                    .append($('<strong>')
+                        .append($('<p>', { "class": "dark-grey-text" }).text(pkg.name))
+                    )
                 )
             )
-            /*
-            .append($('<a>', { "class": "grey-text" })
-                .append($('<h5>').text(pkg.category))
-            )
-            */
         )
     );
     if (status == "staging") {
         card.find(".card")
         .append($('<div>', { "class": "card-footer"})
-            .append($('<button>', { "class": "btn btn-primary " }).text("Develop").click(()=>{
+            .append($('<button>', { "class": "btn btn-primary col-10 mb-2" }).text("Develop").click(()=>{
                 modal.develop(stk, pkg);
             }))
-            .append($('<button>', { "class": "ml-1 btn btn-warning " }).text("Modify").click(()=>{
+            .append($('<button>', { "class": "btn btn-warning col-10 mb-2" }).text("Modify").click(()=>{
                 modal.stage(stk, pkg);
             }))
-            .append($('<button>', { "class": "ml-1 btn btn-danger" }).text("Publish").click(()=>{
+            .append($('<button>', { "class": "btn btn-danger col-10" }).text("Publish").click(()=>{
                 modal.publish(stk, pkg);
             }))
             .append($('<hr>'))
@@ -61,7 +55,7 @@ const createCard = (stk, pkg, status) => {
     } else if (status == "publish") {
         card.find(".card")
         .append($('<div>', { "class": "card-footer"})
-            .append($('<button>', { "class": "ml-1 btn btn-warning" }).text("Stage").click(()=>{
+            .append($('<button>', { "class": "btn btn-warning col-10" }).text("Stage").click(()=>{
                 modal.publish(stk, pkg);
             }))
             .append($('<hr>'))

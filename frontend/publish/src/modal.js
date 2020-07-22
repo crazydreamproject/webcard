@@ -8,11 +8,21 @@ import iso6391 from 'iso-639-1';
 import layout from './layout.js';
 import remote from './remote.js';
 
-const setupModal = (title, form, rules) => {
+const setupModal = (title, form, rules, footer) => {
     let ele = $(layout.ids.modal);
     ele.find(".modal-title").text(title);
     let modalForm = $(layout.ids.modalForm);
+    let modalFooter = ele.find(".modal-footer");
     modalForm.empty().append(form);
+    modalFooter.empty();
+    if (footer) {
+        modalFooter.append(footer);
+    } else {
+        modalFooter
+        .append($('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
+        .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": "modalForm"}).text("Submit"))
+        ;
+    }
     
     modalForm.validate(rules);
 
@@ -22,6 +32,10 @@ const setupModal = (title, form, rules) => {
         focus: true,
         show: true
     });
+}
+
+const Capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 class Modal {
@@ -60,7 +74,7 @@ class Modal {
                     .append($('<label>', { "class": "custom-file-label", "for": "pkgImage", "id": "pkgImageFileName" }).text(srcimage ? srcimage.split('/').pop() : "320 x 240 size"))
                     .append($('<input>', { "type": "file", "class": "custom-file-input", "id": "pkgImage", "name": "pkgImage", "data-errormsg": "#pkgImageErrorMsg" }))))
             .append($('<div>', { "id": "pkgImageErrorMsg"})))
-        .append($('<div>', { "class": "text-center"})
+        .append($('<div>', { "class": "text-center mb-2"})
             .append($('<img>', { "class": "center-block", "id": "pkgCover", "src": srcimage })))
         .append($('<div>', { "class": "input-group" })
             .append($('<div>', { "class": "input-group-prepend" })
@@ -194,7 +208,7 @@ class Modal {
             }
             */
         };
-        setupModal("Staging", form, rules);
+        setupModal("Staging", form, rules, null);
 
     }
     publish(stk, pkg) {
@@ -205,7 +219,7 @@ class Modal {
                 .append($('<input>', { "class": "form-control", "type": "text", "id": "pkgName", "name": "pkgName", "readonly": true, "value": pkg.name }))
             )
         )
-        .append($('<div>', { "class": "text-center"})
+        .append($('<div>', { "class": "text-center mb-2"})
             .append($('<img>', { "class": "center-block", "id": "pkgCover", "src": pkg.image }))
         )
         .append($('<div>', { "class": "form-group row"})
@@ -232,7 +246,7 @@ class Modal {
         let rules = {
             submitHandler: onSubmit,
         };
-        setupModal("Publishing", form, rules);
+        setupModal("Publishing", form, rules, null);
     }
     develop(stk, pkg) {
         // tansition package from staging to developing. just update stack status, no change to package
@@ -250,7 +264,37 @@ class Modal {
         let rules = {
             submitHandler: onSubmit,
         };
-        setupModal("Developing", form, rules);
+        setupModal("Developing", form, rules, null);
+    }
+    detail(stk, pkg) {
+        let form = $('<div>', { "class": "row wow fadeIn", "style": "visibility: visible; animation-name: fadeIn;" })
+        .append($('<div>', { "class": "col-md-6 mb-4" })
+            .append($('<img>', { "class": "center-block", "id": "pkgCover", "src": pkg.image }))
+        )
+        .append($('<div>', { "class": "col-md-6 mb-4" })
+            .append($('<div>')
+                .append($('<span>', { "class": "badge badge-danger mr-1" }).text(Capitalize(pkg.category)))
+            )
+            .append($('<p>', { "class": "lead" })
+                .append($('<span>', { "class": "mr-1" }).text(pkg.name))
+            )
+            .append($('<p>', { "class": "lead font-weight-bold" }).text("Description"))
+            .append($('<p>').text(pkg.description))
+            .append($('<div>', { "class": "row wow fadeIn"})
+                .append($('<button>', { "class": "ml-4 btn btn-secondary mr-4" }).text("Cancel"))
+                .append($('<button>', { "class": "btn btn-danger" }).text("Play"))
+            )
+        )
+        ;
+        let footer = $('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel");
+
+        let onSubmit = () => {
+            return false; // don't reload publish page
+        };
+        let rules = {
+            submitHandler: onSubmit,
+        };
+        setupModal("Detail Preview", form, rules, footer);
     }
 }
 

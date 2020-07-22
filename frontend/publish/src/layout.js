@@ -14,7 +14,7 @@ let setupElements = () => {
     // modal to manipulate staging/publishing
     $('body')
     .append($('<div>', { "class": "modal fade", "tabindex": "-1", "role": "dialog", "id": modalId })
-        .append($('<div>', { "class": "modal-dialog", "role": "document" })
+        .append($('<div>', { "class": "modal-dialog modal-lg", "role": "document" })
             .append($('<div>', { "class": "modal-content" })
                 .append($('<div>', { "class": "modal-header" })
                     .append($('<h5>', { "class": "modal-title" }).text("Modal title"))
