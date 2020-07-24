@@ -29,6 +29,9 @@ class StackViewSet(viewsets.ModelViewSet):
             return StackSerializer
     filter_fields = ('title', 'author', 'status',)
     def get_queryset(self):
-        # just show my stack list or anyone can see other's stacks!
-        queryset = Stack.objects.filter(author=self.request.user)
+        queryset = Stack.objects.filter(status="publish")
+        if (str(self.request.user) != "AnonymousUser"):
+            # just show my stacks list or any published stacks
+            mystacks = Stack.objects.filter(author=self.request.user)
+            queryset = mystacks | queryset
         return queryset

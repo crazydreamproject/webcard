@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
             contentBase: path.join(__dirname, 'public'),
             watchContentBase: true,
             port: 8183,
-            host: argv.mode === 'production' ? 'localhost' : 'localhost', //'0.0.0.0',
+            host: argv.mode === 'production' ? 'localhost' : '0.0.0.0',
             disableHostCheck: true,
             headers: {
                 'Access-Control-Allow-Origin': '*',

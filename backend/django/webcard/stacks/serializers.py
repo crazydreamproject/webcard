@@ -19,6 +19,7 @@ class StackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stack
         fields = ('id', 'title', 'author', 'status', 'created_at', 'updated_at', 'data')
+        #fields = ('id', 'title', 'status', 'created_at', 'updated_at', 'data') # do not show author for security reason
 
 # serializer to call when GET list with out data
 class StackListSerializer(serializers.ModelSerializer):
@@ -26,3 +27,4 @@ class StackListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stack
         fields = ('id', 'title', 'author', 'status', 'created_at', 'updated_at',)
+        #fields = ('id', 'title', 'status', 'created_at', 'updated_at',) # do not show author for security reason

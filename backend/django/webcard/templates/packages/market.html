@@ -1,19 +1,34 @@
 {% extends "base.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}WebCard Market: User: {{ User }}{% endblock title %}
 
 {% block content %}
-    <div class="jumbotron jumbotron-fluid p-5 m-5">
-        <h1 class="display-4">Find awesome apps in market!</h1>
-        <hr class="my-4">
-        <p>Currently bazzar market is under development...</p>
-    </div>
+    {% csrf_token %}
 {% endblock content %}
+
 {% block javascript %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-        // hilite "Documents" nav.
-        $(".nav-item").removeClass("active");
-        $("#navMarket").addClass("active");
+        var els = document.getElementById("navbarSupportedContent").getElementsByClassName("nav-item");
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.remove("active");
+        }
+        document.getElementById("navMarket").classList.add("active");
+    </script>
+    {% if settings.WEBPACK_DEV_SERVER %}
+        <script type="text/javascript" src="http://host.docker.internal:8183/app.bundle.js"></script>
+    {% else %}
+        {% render_bundle 'app' %}
+    {% endif %}
+    <script>
+        {% if User.is_anonymous %}
+        console.log("AnonymousUser, ApiUrl: " + "{{ ApiUrl }}");
+        {% else %}
+        console.log("User: " + "{{ User }}" + ", ApiUrl: " + "{{ ApiUrl }}");
+        {% endif %}
+        WebCardMarket.WcRemote.setup({
+            ApiUrl: "{{ ApiUrl }}"
+        });
     </script>
 {% endblock javascript %}

@@ -7,6 +7,8 @@ class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = ('id', 'name', 'author', 'stack', 'version', 'description', 'image', 'created_at', 'updated_at', 'metadata', 'available', 'category')
+        # remove author field for security reason
+        #fields = ('id', 'name', 'stack', 'version', 'description', 'image', 'created_at', 'updated_at', 'metadata', 'available', 'category')
 
 ''' lets use same for list
 # serializer to call when GET list with out metadata

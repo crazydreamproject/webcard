@@ -55,12 +55,18 @@ class Modal {
         //let srcimage = null;
         let age = pkg != null ? pkg.metadata.age : 5;
         let lang = pkg != null ? pkg.metadata.lang : "en";
+        let pub = pkg != null ? pkg.metadata.publisher : remote.getMyData().username;
         let form = $('<div>')
         .append($('<div>', { "class": "form-group row"})
             .append($('<label>', { "class": "col-form-label col-3", "for": "pkgName"}).text("Pkg Name: "))
             .append($('<div>', { "class": "col-9" })
                 .append($('<input>', { "class": "form-control", "type": "text", "id": "pkgName", "name": "pkgName", "data-errormsg": "#pkgNameErrorMsg","value": name }))
                 .append($('<div>', { "id": "pkgNameErrorMsg" }))))
+        .append($('<div>', { "class": "form-group row"})
+            .append($('<label>', { "class": "col-form-label col-3", "for": "publisherName"}).text("Publisher Name: "))
+            .append($('<div>', { "class": "col-9" })
+                .append($('<input>', { "class": "form-control", "type": "text", "id": "publisherName", "name": "publisherName", "data-errormsg": "#publisherNameErrorMsg", "value": pub }))
+                .append($('<div>', { "id": "publisherNameErrorMsg" }))))
         .append($('<div>', { "class": "form-group row" })
             .append($('<label>', { "class": "col-form-label col-3", "for": "pkgVersion"}).text("Pkg Version: "))
             .append($('<div>', { "class": "col-9" })
@@ -136,13 +142,14 @@ class Modal {
 
         let onSubmit = () => {
             let name = $('#pkgName').val();
-            let author = stk.author;
+            let author = Number.parseInt(remote.getMyData().id);
             let stackid = stk.id;
             let version = Number.parseFloat($('#pkgVersion').val());
             let desc = $('#pkgDesc').val();
             let metadata = {
                 age: Number.parseInt($('#pkgAgeLimit').val()),
-                lang: $('#pkgLanguage').val()
+                lang: $('#pkgLanguage').val(),
+                publisher: $('#publisherName').val(),
             }
             let files = $('#pkgImage').prop('files');
             let file = files.length > 0 ? files[0] : null;
@@ -178,6 +185,10 @@ class Modal {
             //errorElement: "span",
             rules: {
                 pkgName: {
+                    required: true,
+                    rangelength: [3,128],
+                },
+                publisherName: {
                     required: true,
                     rangelength: [3,128],
                 },

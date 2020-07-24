@@ -102,16 +102,6 @@ class Remote {
         return this.cachedPackages;
     }
     postPackage(stk, formData) {
-        /*
-        let csrf = $("[name=csrfmiddlewaretoken]").val();
-        $.ajaxSetup({
-            beforeSend: (xhr, settings) => {
-                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
-                    xhr.setRequestHeader("X-CSRFToken", csrf);
-                }
-            }
-        });
-        */
         // do 2 things: post package and update stack status from develop to staging
         let pkgName = formData.get('name');
         let pkgUrl = this.apiUrl + "packages/";
@@ -126,24 +116,6 @@ class Remote {
         }).done((data) => {
             // stk.status is set by caller from develop to staging. just put it.
             this.putStackStatus(stk);
-            // maybe change to call this.putStackStatus()...
-            /*
-            let stackUrl = this.apiUrl + "stacks/" + formData.get('stack') + '/';
-            $.ajax({
-                type: "PATCH",
-                url: stackUrl,
-                dataType: 'json',
-                data: {
-                    status: "staging"
-                }
-            }).done((data) => {
-                alert("Successful transition to staging of package: " + pkgName);
-            }).fail((data) => {
-                alert("FAIL: transition to staging of package: " + pkgName);
-            }).always((data) => {
-                //
-            });
-            */
         }).fail((req, status, err) => {
             alert("FAIL: POST of package: " + pkgName + ", " + err + ": " + req.responseText);
         }).always((data)=>{
@@ -153,7 +125,6 @@ class Remote {
     putPackage(stk, pkg, formData) {
         let pkgName = formData.get('name');
         let pkgUrl = this.apiUrl + "packages/" +  pkg.id + '/';
-        console.log(...formData);
         $.ajax({
             type: "PATCH", // actually PATCH instead of PUT since formdata might lack some fields.
             url: pkgUrl,
@@ -172,16 +143,6 @@ class Remote {
         });
     }
     putStackStatus(stk) {
-        /*
-        let csrf = $("[name=csrfmiddlewaretoken]").val();
-        $.ajaxSetup({
-            beforeSend: (xhr, settings) => {
-                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
-                    xhr.setRequestHeader("X-CSRFToken", csrf);
-                }
-            }
-        });
-        */
         let stackUrl = this.apiUrl + "stacks/" + stk.id + '/';
         $.ajax({
             type: "PATCH",

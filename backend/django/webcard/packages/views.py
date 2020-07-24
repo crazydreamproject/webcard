@@ -15,8 +15,13 @@ class PackageViewSet(viewsets.ModelViewSet):
     serializer_class = PackageSerializer
     filter_fields = ('name', 'author', 'stack', 'available', 'category')
     def get_queryset(self):
-        # just show my stack list or anyone can see other's stacks!
-        queryset = Package.objects.filter(author=self.request.user)
+        # to list all *MY* packages, OR *ANY* packages that is available (in the market)
+        #queryset = Package.objects.filter(author=self.request.user, available=True) # NG
+        #queryset = Package.objects.filter(author=self.request.user).filter(available=True) #NG, A AND B, not A OR B
+        queryset = Package.objects.filter(available=True)
+        if (str(self.request.user) != "AnonymousUser"):
+            mypkgs = Package.objects.filter(author=self.request.user)
+            queryset = mypkgs | queryset
         return queryset
 
 def index(request):

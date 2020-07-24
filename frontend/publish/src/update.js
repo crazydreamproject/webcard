@@ -160,7 +160,7 @@ class Update {
             });
             if (count) {
                 $(layout.ids.publishDeck).append(divtop);
-                    $(layout.classes.helpDoc + "_publish").show();
+                $(layout.classes.helpDoc + "_publish").show();
             }
         }
         // we need both stacks and packages list, so cascade the call
