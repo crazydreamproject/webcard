@@ -33,7 +33,7 @@ class Remote {
         let csrf = $("[name=csrfmiddlewaretoken]").val();
         $.ajaxSetup({
             beforeSend: (xhr, settings) => {
-                if (/^(POST|PUT|PATCH)$/.test(settings.type)) {
+                if (/^(POST|PUT|PATCH|DELETE)$/.test(settings.type)) {
                     xhr.setRequestHeader("X-CSRFToken", csrf);
                 }
             }
@@ -55,7 +55,7 @@ class Remote {
         }
         let getnow = () => {
             let cb = callback; // responsibility of caller to pass valid function
-            const stacksUrl = this.apiUrl + "stacks/?author=" + this.userData.id;
+            const stacksUrl = this.apiUrl + "stacks/?author=" + this.userData.id + "&limit=16";
             $.get(stacksUrl, (data, status) => {
                 if (status === "success") {
                     this.cachedStacks = data.results;
@@ -138,6 +138,21 @@ class Remote {
             this.putStackStatus(stk);
         }).fail((req, status, err) => {
             alert("FAIL: PUT of package: " + pkgName + ", " + err + ": " + req.responseText);
+        }).always((data)=>{
+            //
+        });
+    }
+    deletePackage(stk, pkg) {
+        let pkgName = pkg.name;
+        let pkgUrl = this.apiUrl + "packages/" +  pkg.id + '/';
+        $.ajax({
+            type: "DELETE", // actually PATCH instead of PUT since formdata might lack some fields.
+            url: pkgUrl,
+        }).done((data) => {
+            // stk.status is set by caller from develop to staging. just put it.
+            this.putStackStatus(stk);
+        }).fail((req, status, err) => {
+            alert("FAIL: DELETE of package: " + pkgName + ", " + err + ": " + req.responseText);
         }).always((data)=>{
             //
         });

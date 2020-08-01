@@ -43,8 +43,11 @@ const createCard = (stk, pkg, status) => {
             .append($('<button>', { "class": "btn btn-warning col-10 mb-2" }).text("Modify").click(()=>{
                 modal.stage(stk, pkg);
             }))
-            .append($('<button>', { "class": "btn btn-danger col-10" }).text("Publish").click(()=>{
+            .append($('<button>', { "class": "btn btn-danger col-10 mb-2" }).text("Publish").click(()=>{
                 modal.publish(stk, pkg);
+            }))
+            .append($('<button>', { "class": "btn btn-dark col-10" }).text("Delete").click(()=>{
+                modal.delete(stk, pkg);
             }))
             .append($('<hr>'))
             .append($('<p>').text("Updated: " + pkg.updated_at))

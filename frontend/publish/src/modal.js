@@ -26,10 +26,12 @@ const setupModal = (title, form, rules, footer) => {
     
     modalForm.validate(rules);
     // workaround, submithandler in validate is not called on second time... so set again here explicitly
+    /* humm, this will post submit twice, creating 2 same entries in packages...
     modalFooter.find(':submit').click(() => {
         rules.submitHandler();
         ele.modal('hide');
     });
+    */
 
     ele.modal({
         backdrop: true,
@@ -275,6 +277,23 @@ class Modal {
             submitHandler: onSubmit,
         };
         setupModal("Developing", form, rules, null);
+    }
+    delete(stk, pkg) {
+        let form = $('<div>', { "class": "alert alert-danger", "role": "alert" })
+        .append($('<h5>', { "class": "alert-heading" }).text("Deleting Package"))
+        .append($('<p>').text("Going to delete packge: \"" + pkg.name + "\" which contains stack: \"" + stk.title + "\" forever!."))
+        .append($('<hr>'))
+        .append($('<p>', { "class": "mb-0" }).text("Press \"Submit\" if it's OK"))
+        ;
+        let onSubmit = () => {
+            stk.status = "develop";
+            remote.deletePackage(stk, pkg);
+            return true; // close modal and reload publish page
+        };
+        let rules = {
+            submitHandler: onSubmit,
+        };
+        setupModal("Deleting", form, rules, null);
     }
     detail(stk, pkg) {
         let lang = iso6391.getName(pkg.metadata.lang); // or getNativeName() ?
