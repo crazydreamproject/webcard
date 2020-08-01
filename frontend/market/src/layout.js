@@ -31,12 +31,11 @@ let setupElements = () => {
                         )
                     )
                 )
-                /*  actually, we don't need cancel/OK footer!
                 .append($('<div>', { "class": "modal-footer" })
-                    .append($('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
-                    .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": "modalForm"}).text("OK"))
+                    .append($('<button>', { "class": "btn btn-secondary mr-2", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
+                    .append($('<button>', { "class": "btn btn-danger", "type": "submit", "form": "modalForm"}).text("Play"))
                 )
-                */
+                
             )
         )
     );
@@ -111,6 +110,10 @@ let setupElements = () => {
     }
     setup() {
         setupElements();
+        $('#' + modalFormId).submit(function(e) {
+            e.preventDefault();
+            return false;
+        });
     }
 }
 

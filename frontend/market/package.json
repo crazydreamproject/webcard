@@ -50,6 +50,7 @@
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.2",
     "lodash": "^4.17.19",
+    "mdbootstrap": "^4.19.1",
     "popper.js": "^1.16.1"
   }
 }

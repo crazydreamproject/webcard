@@ -2,8 +2,8 @@
  * construct and show modal prompt
  */
 'use strict';
-//import 'jquery-validation';
-//import 'jquery-validation/dist/additional-methods';
+import 'jquery-validation';
+import 'jquery-validation/dist/additional-methods';
 import iso6391 from 'iso-639-1';
 import layout from './layout.js';
 
@@ -13,7 +13,7 @@ const setupModal = (title, form, rules) => {
     let modalForm = $(layout.ids.modalForm);
     modalForm.empty().append(form);
     
-//    modalForm.validate(rules);
+    modalForm.validate(rules);
 
     ele.modal({
         backdrop: true,
@@ -29,10 +29,6 @@ const Capitalize = (str) => {
 
 class Modal {
     constructor() {
-        $(layout.ids.modalForm).submit(function(e) {
-            e.preventDefault();
-            return false;
-        });
     }
     detail(pkg) {
         let lang = iso6391.getName(pkg.metadata.lang); // or getNativeName() ?
@@ -47,38 +43,42 @@ class Modal {
             .append($('<p>', { "class": "lead mb-1" })
                 .append($('<span>', { "class": "mr-1" }).text(pkg.name))
             )
-            .append($('<p>', { "class": "lead mb-1" })
+            .append($('<footer>', { "class": "backquote-footer mb-1" })
                 .append($('<span>', { "class": "mr-1" }).text(pkg.metadata.publisher))
             )
             .append($('<div>', { "class": "row wow fadeIn" })
 
                 .append($('<nav>', { "class": "fadeIn mr-2 ml-3" })
-                    .append($('<ul>', { "class": "pagination" })
+                    .append($('<ul>', { "class": "pagination pagination-sm" })
                         .append($('<li>', { "class": "page-item disabled" })
                             .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text("Language")))
                         .append($('<li>', { "class": "page-item disabled" })
                             .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text(lang)))
                     )
                 )
-                .append($('<nav>', { "class": "fadeIn" })
-                    .append($('<ul>', { "class": "pagination" })
+                .append($('<nav>', { "class": "fadeIn mr-2" })
+                    .append($('<ul>', { "class": "pagination pagination-sm" })
                         .append($('<li>', { "class": "page-item disabled" })
                             .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text("Age")))
                         .append($('<li>', { "class": "page-item disabled" })
                             .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text(pkg.metadata.age)))
                     )
                 )
+                .append($('<nav>', { "class": "fadeIn mr-2" })
+                    .append($('<ul>', { "class": "pagination pagination-sm" })
+                        .append($('<li>', { "class": "page-item disabled" })
+                            .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text("Version")))
+                        .append($('<li>', { "class": "page-item disabled" })
+                            .append($('<a>', { "class": "page-link waves-effect", "href": "#" }).text(pkg.version)))
+                    )
+                )
             )
             .append($('<p>', { "class": "lead font-weight-bold" }).text("Description"))
             .append($('<p>').text(pkg.description))
-            .append($('<div>', { "class": "row wow fadeIn"})
-                .append($('<button>', { "class": "ml-4 btn btn-secondary mr-4" }).text("Cancel"))
-                .append($('<button>', { "class": "btn btn-danger" }).text("Play"))
-            )
         )
         ;
         let onSubmit = () => {
-            return false; // don't reload publish page
+            $(layout.ids.modal).modal('hide');
         };
         let rules = {
             submitHandler: onSubmit,
