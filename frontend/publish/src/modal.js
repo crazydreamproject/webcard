@@ -25,6 +25,11 @@ const setupModal = (title, form, rules, footer) => {
     }
     
     modalForm.validate(rules);
+    // workaround, submithandler in validate is not called on second time... so set again here explicitly
+    modalFooter.find(':submit').click(() => {
+        rules.submitHandler();
+        ele.modal('hide');
+    });
 
     ele.modal({
         backdrop: true,
@@ -40,12 +45,6 @@ const Capitalize = (str) => {
 
 class Modal {
     constructor() {
-        /* we want page to be reloaded after pressing OK!
-        $(layout.ids.modalForm).submit(function(e) {
-            e.preventDefault();
-            return false;
-        });
-        */
     }
     stage(stk, pkg) {
         let name = pkg != null ? pkg.name : stk.title;

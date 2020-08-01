@@ -236,6 +236,12 @@ class Layout {
     }
     setup() {
         setupElements();
+        /*
+        $('#' + modalFormId).submit(function(e) {
+            e.preventDefault();
+            return false;
+        });
+        */
     }
 }
 
