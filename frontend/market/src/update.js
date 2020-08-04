@@ -26,11 +26,59 @@ const createCard = (pkg) => {
 class Update {
     constructor() {
         this.page_offset = 0;
+        this.category = "all";
+        this.search = "";
     }
-    render() {
-         // cleanup
+    setup() {
+        // setup category navbar
+        $(layout.ids.categAll).click(() => {
+            this.category = "all";
+            this.render();
+        });
+        $(layout.ids.categPlayable).click(() => {
+            this.category = "playable";
+            this.render();
+        });
+        $(layout.ids.categTutorial).click(() => {
+            this.category = "tutorial";
+            this.render();
+        });
+        $(layout.ids.categPlugins).click(() => {
+            this.category = "plugin";
+            this.render();
+        });
+        $(layout.ids.search).keyup((ev) => {
+            let code = (ev.keyCode) ? ev.keyCode : ev.which;
+            if (code === 13) { // pressed enter. begin search
+                let name = $(layout.ids.search).val();
+                this.search = name;
+                this.render();
+            }
+        });
+    }
+    render() {        
+        // cleanup
         $(layout.ids.section).empty();
         $(layout.ids.pagination).empty();
+        $(layout.ids.categTop).find(".nav-item").removeClass("active");
+        switch(this.category) {
+            case "all":
+                $(layout.ids.categAll).addClass("active");
+                break;
+            case "playable":
+                $(layout.ids.categPlayable).addClass("active");
+                break;
+            case "tutorial":
+                $(layout.ids.categTutorial).addClass("active");
+                break;
+            case "plugin":
+                $(layout.ids.categPlugins).addClass("active");
+                break;
+            default:
+                console.error("No such category: " + this.category);
+                break;
+        }
+
         let updatePackages = (data) => {
             let divtop = $('<div>');
             let divrow = null;
@@ -89,7 +137,7 @@ class Update {
                     .append($('<div>', { "class": "page-link waves-effect" }).text("Next")));
             }
         };
-        remote.getPublishedPackages(updatePackages, this.page_offset);
+        remote.getPublishedPackages(updatePackages, this.page_offset, this.category, this.search);
    }
 }
 

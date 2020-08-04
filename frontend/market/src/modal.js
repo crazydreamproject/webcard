@@ -38,7 +38,8 @@ class Modal {
         )
         .append($('<div>', { "class": "col-md-6 mb-4" })
             .append($('<div>')
-                .append($('<span>', { "class": "badge badge-danger mr-1" }).text(Capitalize(pkg.category)))
+                .append($('<span>', { "class": "badge mr-1 " + 
+                (pkg.category === "playable" ? "badge-danger" : (pkg.category === "tutorial" ? "badge-dark" : "badge-warning")) }).text(Capitalize(pkg.category)))
             )
             .append($('<p>', { "class": "lead mb-1" })
                 .append($('<span>', { "class": "mr-1" }).text(pkg.name))

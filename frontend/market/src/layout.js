@@ -6,8 +6,14 @@
 const containerId = "MainFrameId";
 const sectionId = "PackageCardsId";
 const paginationId = "PaginationId";
-const modalId = "ModalTop";
-const modalFormId = "modalForm";
+const modalId = "ModalTopId";
+const modalFormId = "ModalFormId";
+const navbarId = "NavBarCategoriesId";
+const categoryAllId = "NavItemCategoryAllId";
+const categoryPlayablesId = "NavItemCategoryPlayablesId";
+const categoryTutorialsId = "NavItemCategoryTutorialsId";
+const categoryPluginsId = "NavItemCategoryPluginsId";
+const searchId = "InputSearchPackageId";
 
 let setupElements = () => {
     // modal to show package detail
@@ -45,7 +51,7 @@ let setupElements = () => {
     .append($('<div>', { "class": "jumbotron jumbotron-fluid p-5 m-5"})
         .append($('<h1>', { "class": "display-4" }).text("Find awesome decks in the market!"))
         .append($('<hr>'))
-        .append($('<p>').text("Cagegories and search is just a mock for now..."))
+        .append($('<p>').text("Search is just exact match for now..."))
     );
 
     // main container view
@@ -58,19 +64,19 @@ let setupElements = () => {
                 .append($('<span>', { "class": "navbar-toggle-icon" }))
             )
             .append($('<div>', { "class": "collapse navbar-collapse", "id": "navbarCategoryNav" })
-                .append($('<ul>', { "class": "navbar-nav mr-auto" })
-                    .append($('<li>', { "class": "nav-item active" })
+                .append($('<ul>', { "class": "navbar-nav mr-auto", "id": navbarId })
+                    .append($('<li>', { "class": "nav-item active", "id": categoryAllId })
                         .append($('<a>', { "class": "nav-link waves-effect waves-light", "href": "#" }).text("All")))
-                    .append($('<li>', { "class": "nav-item" })
+                    .append($('<li>', { "class": "nav-item", "id": categoryPlayablesId })
                         .append($('<a>', { "class": "nav-link waves-effect waves-light", "href": "#" }).text("Playables")))
-                    .append($('<li>', { "class": "nav-item" })
+                    .append($('<li>', { "class": "nav-item", "id": categoryTutorialsId })
                         .append($('<a>', { "class": "nav-link waves-effect waves-light", "href": "#" }).text("Tutorials")))
-                    .append($('<li>', { "class": "nav-item" })
+                    .append($('<li>', { "class": "nav-item", "id": categoryPluginsId })
                         .append($('<a>', { "class": "nav-link waves-effect waves-light", "href": "#" }).text("Plugins")))
                 )
                 .append($('<form>', { "class": "form-inline" })
                     .append($('<div>', { "class": "md-form my-0" })
-                        .append($('<input>', { "class": "form-control mr-sm-2", "type": "search", "placeholder": "Search" })))
+                        .append($('<input>', { "class": "form-control mr-sm-2", "type": "search", "placeholder": "Search", "id": searchId })))
                 )
             )
         )
@@ -104,13 +110,20 @@ let setupElements = () => {
             pagination: '#' + paginationId,
             modal: '#' + modalId,
             modalForm: '#' + modalFormId,
+            categTop: '#' + navbarId,
+            categAll: '#' + categoryAllId,
+            categPlayable: '#' + categoryPlayablesId,
+            categTutorial: '#' + categoryTutorialsId,
+            categPlugins: '#' + categoryPluginsId,
+            search: '#' + searchId,
         };
         this.classes = {
         };
     }
     setup() {
         setupElements();
-        $('#' + modalFormId).submit(function(e) {
+        // don't reload page on submit
+        $("form").submit(function(e) {
             e.preventDefault();
             return false;
         });

@@ -7,6 +7,7 @@ import remote from './remote.js';
 import update from './update.js';
 
 layout.setup();
+update.setup();
 update.render();
 
 export const WcRemote = remote;

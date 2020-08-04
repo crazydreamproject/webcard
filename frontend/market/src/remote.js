@@ -16,10 +16,12 @@ class Remote {
         }
     }
     // todo handle pagination
-    getPublishedPackages(callback, offset) {
+    getPublishedPackages(callback, offset, category, name) {
+        let categparam = (category === "all") ? "" : "&category=" + category;
+        let nameparam = (name === "") ? "" : "&name=" + name;
         let getnow = () => {
             let cb = callback; // responsibility of caller to pass valid function
-            const packagesUrl = this.apiUrl + "packages/?available=true&offset=" + offset;
+            const packagesUrl = this.apiUrl + "packages/?available=true&offset=" + offset + categparam + nameparam;
             $.get(packagesUrl, (data, status) => {
                 if (status === "success") {
                     cb(data);
