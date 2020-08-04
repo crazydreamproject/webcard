@@ -3,6 +3,7 @@
  */
 
 import WcUser from './user.js';
+import StackOp from './stack.js';
 
 // singleton
 var remoteInstance;
@@ -23,6 +24,10 @@ WcRemote.prototype = {
         this.ApiUrl = json.ApiUrl;
         // now user info can be obtained via webapi.
         WcUser.setup();
+        if (json.StackId !== "") {
+            // load playable stack
+            StackOp.playLoad(json.StackId);
+        }
     },
     getUserName: function() {
         return this.userName;

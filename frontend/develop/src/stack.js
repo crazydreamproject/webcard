@@ -426,6 +426,22 @@ StackManager.prototype = {
             DomOp.update();
         });
     },
+    playLoad: function(stackId) {
+        WcStorage.remote.play(stackId, function(json) {
+            // check json
+            if (!json) { // no data with this title
+                var errtxt = "JSON Data not found in server of stack id: " + stackId;
+                console.error(errtxt);
+                alert(errtxt); // ! TODO: to use bootstrap alert style later
+                return false;
+            }
+            //! todo: set stack title, as json.title...
+            // OK json data is correct. first convert to string to pass to jsonLoad
+            stackManagerInstance.jsonLoad(JSON.stringify(json.data));
+            // since it is async, DomOp.update() in modal.js openStack misses. call it here
+            DomOp.update();
+        });
+    },
     buildUp: function(jsonObj) {
         // convert jsonObj to WcXxxx classes
         var stks = [];

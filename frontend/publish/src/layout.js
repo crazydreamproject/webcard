@@ -2,12 +2,12 @@
  * layout.js: Set components to body
  */
 
-const containerId = "MainFrame";
-const develTableId = "TbodyDevelop";
-const stageDeckId = "StagingCardDeck";
-const publishDeckId = "PublishedCardDeck";
-const modalId = "ModalTop";
-const modalFormId = "modalForm";
+const containerId = "MainFrameId";
+const develTableId = "TbodyDevelopId";
+const stageDeckId = "StagingCardDeckId";
+const publishDeckId = "PublishedCardDeckId";
+const modalId = "ModalTopId";
+const modalFormId = "ModalFormId";
 const helpDocCls = "help_document";
 
 let setupElements = () => {
@@ -34,7 +34,7 @@ let setupElements = () => {
                 )
                 .append($('<div>', { "class": "modal-footer" })
                     .append($('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
-                    .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": "modalForm"}).text("Submit"))
+                    .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": modalFormId }).text("Submit"))
                 )
             )
         )

@@ -79,7 +79,10 @@ class Modal {
         )
         ;
         let onSubmit = () => {
+            let stackId = pkg.stack;
+            let serverUrl = window.location.origin + "/editor/play/" + stackId + "/";
             $(layout.ids.modal).modal('hide');
+            window.open(serverUrl);
         };
         let rules = {
             submitHandler: onSubmit,

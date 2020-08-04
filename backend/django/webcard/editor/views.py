@@ -13,3 +13,12 @@ def index(request):
         'settings': settings,
     }
     return render(request, 'editor/index.html', context)
+
+def play(request, stack_id):
+    context = {
+        'User': request.user,
+        'ApiUrl': reverse_lazy('stack:api-root', request=request),
+        'StackId': stack_id,
+        'settings': settings,
+    }
+    return render(request, 'editor/index.html', context)

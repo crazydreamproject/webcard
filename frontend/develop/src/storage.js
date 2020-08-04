@@ -284,6 +284,22 @@ WcStorage.prototype = {
                 }
             });
         },
+        play: function(stackId, callback) {
+            if (typeof callback !== 'function') {
+                console.error("callback of WcStorage.remote() should be function, not " + typeof callback);
+                return null;
+            }
+            var ApiRootUrl = WcRemote.getApiRootUrl();
+            var ApiUrl = ApiRootUrl + "stacks/" + stackId + "/?status=publish";
+            $.get(ApiUrl, function(data, status) {
+                if (status === "success") {
+                    callback(data);
+                } else {
+                    callback(null);
+                }
+            })
+
+        },
         remove: function(name) {
             // first check if entry with this stack title name exists
             var user = this.getUserOrAlert();

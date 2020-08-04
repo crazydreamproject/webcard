@@ -39,7 +39,7 @@ let setupElements = () => {
                 )
                 .append($('<div>', { "class": "modal-footer" })
                     .append($('<button>', { "class": "btn btn-secondary mr-2", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
-                    .append($('<button>', { "class": "btn btn-danger", "type": "submit", "form": "modalForm"}).text("Play"))
+                    .append($('<button>', { "class": "btn btn-danger", "type": "submit", "form": modalFormId }).text("Play"))
                 )
                 
             )
