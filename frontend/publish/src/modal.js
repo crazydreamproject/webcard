@@ -20,10 +20,10 @@ const setupModal = (title, form, rules, footer) => {
     } else {
         modalFooter
         .append($('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel"))
-        .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": "modalForm"}).text("Submit"))
+        .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": layout.ids.modalForm.substr(1) }).text("Submit"))
         ;
     }
-    
+
     modalForm.validate(rules);
     // workaround, submithandler in validate is not called on second time... so set again here explicitly
     /* humm, this will post submit twice, creating 2 same entries in packages...
@@ -340,6 +340,8 @@ class Modal {
             )
             .append($('<p>', { "class": "lead font-weight-bold" }).text("Description"))
             .append($('<p>').text(pkg.description))
+            .append($('<hr>'))
+            .append($('<p>').text("Updated: " + pkg.updated_at))
         )
         ;
         let footer = $('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel");

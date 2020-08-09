@@ -76,6 +76,8 @@ class Modal {
             )
             .append($('<p>', { "class": "lead font-weight-bold" }).text("Description"))
             .append($('<p>').text(pkg.description))
+            .append($('<hr>'))
+            .append($('<p>').text("Updated: " + pkg.updated_at))
         )
         ;
         let onSubmit = () => {
