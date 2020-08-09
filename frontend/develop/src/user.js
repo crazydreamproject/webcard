@@ -14,6 +14,7 @@ function WcUser() {
     this.status_ = WcUser.status.logout;
     this.dataJson = null;
     userInstance = this;
+    WcRemote.addSetupCallback(this.setupCallback);
 }
 WcUser.status = {
     login: "Logged In",
@@ -21,7 +22,7 @@ WcUser.status = {
 };
 WcUser.prototype = {
     constructor: WcUser,
-    setup: function() {
+    setupCallback: function(json) {
         var userName = WcRemote.getUserName();
         var ApiUrl = WcRemote.getApiRootUrl();
         ApiUrl += "authors/?username=" + userName;

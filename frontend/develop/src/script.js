@@ -169,7 +169,7 @@ WcScript.prototype = {
             }
         };
         var idx = WcStorage.local.register(callback);
-        var wnd = window.open('editor.html', null, 'top=100, left=100, width=640, height=640, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=yes');
+        var wnd = window.open('script.html', null, 'top=100, left=100, width=640, height=640, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=yes');
         //! fixme find a better way to detect child window closed
         var timer = setInterval(function() {
             if (wnd.closed) {

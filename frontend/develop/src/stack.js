@@ -15,6 +15,7 @@ import WcResource from './resource.js';
 import WcObject from './object.js';
 import WcCard from './card.js';
 import WcEvent from './event.js';
+import WcRemote from './remote.js';
 //import WcLayout from './layout.js';
 import DomOp from './dom.js';
 
@@ -336,6 +337,7 @@ function StackManager() {
     };
     // set singleton instance
     stackManagerInstance = this;
+    WcRemote.addSetupCallback(this.playLoad);
 }
 StackManager.getInstance = function() { return new StackManager(); };
 StackManager.prototype = {
@@ -426,7 +428,11 @@ StackManager.prototype = {
             DomOp.update();
         });
     },
-    playLoad: function(stackId) {
+    playLoad: function(json) {
+        var stackId = json.StackId;
+        if (stackId === "") {
+            return;
+        }
         WcStorage.remote.play(stackId, function(json) {
             // check json
             if (!json) { // no data with this title

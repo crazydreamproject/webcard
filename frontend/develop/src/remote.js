@@ -2,9 +2,6 @@
  * WebCard remote class: I/F with remote Django server
  */
 
-import WcUser from './user.js';
-import StackOp from './stack.js';
-
 // singleton
 var remoteInstance;
 
@@ -15,18 +12,17 @@ function WcRemote() {
     remoteInstance = this;
     this.userName = '';
     this.ApiUrl = '';
+    this.setupCallbackList = [];
 }
 
 WcRemote.prototype = {
     constructor: WcRemote,
     setup: function(json) {
+        var f;
         this.userName = json.userName;
         this.ApiUrl = json.ApiUrl;
-        // now user info can be obtained via webapi.
-        WcUser.setup();
-        if (json.StackId !== "") {
-            // load playable stack
-            StackOp.playLoad(json.StackId);
+        while((f = this.setupCallbackList.pop()) != null) {
+            f(json);
         }
     },
     getUserName: function() {
@@ -67,6 +63,9 @@ WcRemote.prototype = {
             return "NO CSRF TOKEN (You are in standalone development mode)";
         }
         */
+    },
+    addSetupCallback: function(callback) {
+        this.setupCallbackList.push(callback);
     }
 };
 
