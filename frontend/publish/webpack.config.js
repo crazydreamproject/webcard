@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleTracker = require('webpack-bundle-tracker');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = (env, argv) => {
@@ -127,9 +127,11 @@ module.exports = (env, argv) => {
         conf.plugins.push(new webpack.HotModuleReplacementPlugin());
     } else { // production
         conf.devtool = 'source-map';
+        /* Uglify does not support ES6 and emits unexpected token <const>. used Terser as minimizer instead.
         conf.plugins.push(new UglifyJSPlugin({
             sourceMap: true
         }));
+        */
         conf.plugins.push(new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }));
