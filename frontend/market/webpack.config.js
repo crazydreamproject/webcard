@@ -29,12 +29,12 @@ module.exports = (env, argv) => {
                 'Access-Control-Allow-Headers': '*',
             }
         },
-        entry: {app: './src/index.js'},
+        entry: {market: './src/index.js'},
         output: {
             path: path.join(__dirname, 'dist'),
             publicPath: argv.mode === 'production' ?
-                'https://webcard-bucket.s3.amazonaws.com/static/frontend/market/dist'
-                : 'http://host.docker.internal:8183',
+                'https://webcard-bucket.s3.amazonaws.com/static/frontend/market/dist/'
+                : 'http://host.docker.internal:8183/',
             filename: argv.mode === 'production' ? `[name].[chunkhash].js` : `[name].bundle.js`,  //`[name].min.js`
             libraryTarget: 'var',
             library: 'WebCardMarket'

@@ -62,11 +62,16 @@ WEBPACK_DEV_SERVER = True
 FRONTEND_DIR = '/frontend/'
 STATICFILES_DIRS += [FRONTEND_DIR]
 
+STATS_FILE = FRONTEND_DIR + 'webpack-stats.json'
+#STATS_FILE = '/app/webcard/static/frontend/webpack-stats.json'
+print('STATS_FILE: ' + STATS_FILE)
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'dist/',
-        'STATS_FILE': FRONTEND_DIR + 'develop/webpack-stats.json',
+        #'STATS_FILE': FRONTEND_DIR + 'dist/webpack-stats.json',
+        'STATS_FILE': STATS_FILE,
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map']

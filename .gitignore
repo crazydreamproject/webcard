@@ -271,3 +271,5 @@ temp/
 # End of https://www.gitignore.io/api/node,django,python
 
 webpack-stats.json
+
+# backend/django/static/frontend

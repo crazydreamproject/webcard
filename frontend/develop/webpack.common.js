@@ -9,7 +9,7 @@ module.exports = {
     },
     entry: {
         app: './src/index.js',
-        editor: './src/editor.js',
+        script: './src/editor.js',
         msgbox: './src/messagebox.js',
         audio: './src/audio.js',
         icon: './src/icon.js'
@@ -19,14 +19,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Webcard Editor',
             template: './src/test.html',
-            excludeChunks: ['editor', 'msgbox', 'audio', 'icon'],
+            excludeChunks: ['script', 'msgbox', 'audio', 'icon'],
             filename: 'index.html' // which is default
         }),
         new HtmlWebpackPlugin({
             title: 'Script Editor',
             template: './src/test.html',
-            chunks: ['editor'],
-            filename: 'editor.html'
+            chunks: ['script'],
+            filename: 'script.html'
         }),
         new HtmlWebpackPlugin({
             title: 'Message Box',
@@ -58,7 +58,7 @@ module.exports = {
     ],
     optimization: {
         runtimeChunk: false,
-        //! todo: configure for multiple entry (app, editor) chunks to work...
+        //! todo: configure for multiple entry (app, script) chunks to work...
         //runtimeChunk: 'single',
         //runtimeChunk: 'multiple',
         /*

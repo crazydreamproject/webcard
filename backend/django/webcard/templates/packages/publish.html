@@ -17,9 +17,9 @@
         document.getElementById("navPublish").classList.add("active");
     </script>
     {% if settings.WEBPACK_DEV_SERVER %}
-        <script type="text/javascript" src="http://host.docker.internal:8182/app.bundle.js"></script>
+        <script type="text/javascript" src="http://host.docker.internal:8182/publish.bundle.js"></script>
     {% else %}
-        {% render_bundle 'app' %}
+        {% render_bundle 'publish' %}
     {% endif %}
     <script>
         {% if User.is_anonymous %}

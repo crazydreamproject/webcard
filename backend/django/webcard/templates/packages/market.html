@@ -17,9 +17,9 @@
         document.getElementById("navMarket").classList.add("active");
     </script>
     {% if settings.WEBPACK_DEV_SERVER %}
-        <script type="text/javascript" src="http://host.docker.internal:8183/app.bundle.js"></script>
+        <script type="text/javascript" src="http://host.docker.internal:8183/market.bundle.js"></script>
     {% else %}
-        {% render_bundle 'app' %}
+        {% render_bundle 'market' %}
     {% endif %}
     <script>
         {% if User.is_anonymous %}
