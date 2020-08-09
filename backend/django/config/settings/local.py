@@ -62,7 +62,7 @@ WEBPACK_DEV_SERVER = True
 FRONTEND_DIR = '/frontend/'
 STATICFILES_DIRS += [FRONTEND_DIR]
 
-STATS_FILE = FRONTEND_DIR + 'webpack-stats.json'
+STATS_FILE = FRONTEND_DIR + 'develop/webpack-stats.json'
 #STATS_FILE = '/app/webcard/static/frontend/webpack-stats.json'
 print('STATS_FILE: ' + STATS_FILE)
 
