@@ -61,18 +61,13 @@
         {% if User.is_anonymous %}
         console.log("Anonymous User");
         {% else %}
-        // setup frontend server info
-        //console.log(WebCardDevelop);
-        //console.log(typeof WebCardDevelop);
-        //console.log(WebCardDevelop.WcRemote);
-        //console.log(typeof WebCardDevelop.WcRemote);
-        //console.log(typeof WebCardDevelop.WcRemote.setup);
+        console.log("User: {{ User }}");
+        {% endif %}
         WebCardDevelop.WcRemote.setup({
             userName: "{{ User }}",
             ApiUrl: "{{ ApiUrl }}",
             StackId: "{{ StackId }}"
         });
-        {% endif %}
     </script>
 
 {% endblock javascript %}
