@@ -428,7 +428,8 @@ WcEvent.prototype = {
                 }
             };
             var idx = WcStorage.local.register(callback);
-            this.wnd = window.open('msgbox.html', null, 'top=100, left=100, width=640, height=200, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
+            var url = location.origin + "/editor/msgbox.html";
+            this.wnd = window.open(url, null, 'top=100, left=100, width=640, height=200, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
             this.wnd.idx = idx;
             /*
             //! fixme find a better way to detect child window closed

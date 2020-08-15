@@ -87,7 +87,8 @@ function setupDefaultMenu() {
             { type: "separator", name: "divider" },
             { id: "Audio", name: "Audio...", callback: function() {
                 // todo: check setup local storage needed here
-                var wnd = window.open('audio.html', null, 'top=100, left=100, width=800, height=600, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
+                var url = location.origin + "/editor/audio.html";
+                var wnd = window.open(url, null, 'top=100, left=100, width=800, height=600, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
                 
             } },
             { id: "AudioHelp", name: "Audio Help", callback: undefined }

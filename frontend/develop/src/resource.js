@@ -219,7 +219,8 @@ WcResource.prototype = {
         }
         WcStorage.local.save(iconSelectKey, name);
 
-        var wnd = window.open('icon.html', null, 'top=100, left=100, width=800, height=800, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
+        var url = location.origin + "/editor/icon.html";
+        var wnd = window.open(url, null, 'top=100, left=100, width=800, height=800, menubar=no, toolbar=no, location=no, status=no, resizable=yes, scrollbars=no');
         //! fixme find a better way to detect child window closed
         var timer = setInterval(function() {
             if (wnd.closed) {
