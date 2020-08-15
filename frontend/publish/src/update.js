@@ -34,7 +34,7 @@ const createCard = (stk, pkg, status) => {
             )
         )
     );
-    if (status == "staging") {
+    if (status === "staging") {
         card.find(".card")
         .append($('<div>', { "class": "card-footer"})
             .append($('<button>', { "class": "btn btn-primary col-10 mb-2" }).text("Develop").click(()=>{
@@ -52,7 +52,7 @@ const createCard = (stk, pkg, status) => {
             .append($('<hr>'))
             .append($('<p>').text("Updated: " + pkg.updated_at))
         );
-    } else if (status == "publish") {
+    } else if (status === "publish") {
         card.find(".card")
         .append($('<div>', { "class": "card-footer"})
             .append($('<button>', { "class": "btn btn-warning col-10" }).text("Stage").click(()=>{

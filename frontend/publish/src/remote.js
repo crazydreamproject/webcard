@@ -78,7 +78,7 @@ class Remote {
         }
         let getnow = () => {
             let cb = callback; // responsibility of caller to pass valid function
-            const packagesUrl = this.apiUrl + "packages/?author=" + this.userData.id;
+            const packagesUrl = this.apiUrl + "packages/?author=" + this.userData.id + "&limit=16";
             $.get(packagesUrl, (data, status) => {
                 if (status === "success") {
                     this.cachedPackages = data.results;
@@ -117,7 +117,9 @@ class Remote {
             // stk.status is set by caller from develop to staging. just put it.
             this.putStackStatus(stk);
         }).fail((req, status, err) => {
-            alert("FAIL: POST of package: " + pkgName + ", " + err + ": " + req.responseText);
+            let msg = "FAIL: POST of package: " + pkgName + ", " + ", status: " + status + ", " + err + ": " + req.responseText;
+            alert(msg);
+            console.error(msg);
         }).always((data)=>{
             //
         });
@@ -137,7 +139,9 @@ class Remote {
             // stk.status is set by caller from develop to staging. just put it.
             this.putStackStatus(stk);
         }).fail((req, status, err) => {
-            alert("FAIL: PUT of package: " + pkgName + ", " + err + ": " + req.responseText);
+            let msg = "FAIL: PUT/PATCH of package: " + pkgName + ", " + ", status: " + status + ", " + err + ": " + req.responseText;
+            alert(msg);
+            console.error(msg);
         }).always((data)=>{
             //
         });
@@ -152,7 +156,9 @@ class Remote {
             // stk.status is set by caller from develop to staging. just put it.
             this.putStackStatus(stk);
         }).fail((req, status, err) => {
-            alert("FAIL: DELETE of package: " + pkgName + ", " + err + ": " + req.responseText);
+            let msg = "FAIL: DELETE of package: " + pkgName + ", " + ", status: " + status + ", " + err + ": " + req.responseText;
+            alert(msg);
+            console.error(msg);
         }).always((data)=>{
             //
         });

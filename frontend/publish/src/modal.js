@@ -7,6 +7,7 @@ import 'jquery-validation/dist/additional-methods';
 import iso6391 from 'iso-639-1';
 import layout from './layout.js';
 import remote from './remote.js';
+import update from './update.js';
 
 const setupModal = (title, form, rules, footer) => {
     let ele = $(layout.ids.modal);
@@ -142,6 +143,7 @@ class Modal {
         });
 
         let onSubmit = () => {
+            console.log("stage onSubmit");
             let name = $('#pkgName').val();
             let author = Number.parseInt(remote.getMyData().id);
             let stackid = stk.id;
@@ -175,8 +177,12 @@ class Modal {
                 }
                 remote.putPackage(stk, pkg, fd); // @todo: implement later...
             }
-
-            return true; // close modal and reload publish page
+            // redraw with 3 sec interval (for server to reflect updated data)
+            // use await / promise ?
+            setTimeout(() => {
+                $(layout.ids.modal).modal('hide');
+                update.render();
+            }, 3000);
         };
         let rules = {
             submitHandler: onSubmit,
@@ -246,14 +252,16 @@ class Modal {
         ;
 
         let onSubmit = () => {
+            console.log("publish onSubmit");
             let available = $('#pkgPublish').val() === "true";
-            console.log(available);
-            console.log(typeof available);
             let fd = new FormData();
             fd.append('available', available);
             stk.status = available ? "publish" : "staging";
             remote.putPackage(stk, pkg, fd);
-            return true; // close modal and reload publish page
+            setTimeout(() => {
+                $(layout.ids.modal).modal('hide');
+                update.render();
+            }, 3000);
         };
         let rules = {
             submitHandler: onSubmit,
@@ -269,9 +277,13 @@ class Modal {
         .append($('<p>', { "class": "mb-0" }).text("Press \"Submit\" if it's OK"))
         ;
         let onSubmit = () => {
+            console.log("develop onSubmit");
             stk.status = "develop";
             remote.putStackStatus(stk);
-            return true; // close modal and reload publish page
+            setTimeout(() => {
+                $(layout.ids.modal).modal('hide');
+                update.render();
+            }, 3000);
         };
         let rules = {
             submitHandler: onSubmit,
@@ -286,9 +298,13 @@ class Modal {
         .append($('<p>', { "class": "mb-0" }).text("Press \"Submit\" if it's OK"))
         ;
         let onSubmit = () => {
+            console.log("delete onSubmit");
             stk.status = "develop";
             remote.deletePackage(stk, pkg);
-            return true; // close modal and reload publish page
+            setTimeout(() => {
+                $(layout.ids.modal).modal('hide');
+                update.render();
+            }, 3000);
         };
         let rules = {
             submitHandler: onSubmit,
