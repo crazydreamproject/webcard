@@ -12,9 +12,20 @@ import update from './update.js';
 const setupModal = (title, form, rules, footer) => {
     let ele = $(layout.ids.modal);
     ele.find(".modal-title").text(title);
-    let modalForm = $(layout.ids.modalForm);
+    let formParent = $(layout.ids.modalForm).parent();
+    let modalForm;
     let modalFooter = ele.find(".modal-footer");
-    modalForm.empty().append(form);
+
+    // re-create new <form> element every time modal is called, so modalForm.validate() will properly set submitHandler.
+    formParent.empty();
+    formParent.append($('<form>', { "id": layout.ids.modalForm.substr(1) }).append(form));
+    modalForm = $(layout.ids.modalForm);
+    modalForm.submit((e) => {
+        e.preventDefault();
+        return false;
+    });
+    modalForm.validate(rules);
+
     modalFooter.empty();
     if (footer) {
         modalFooter.append(footer);
@@ -24,15 +35,6 @@ const setupModal = (title, form, rules, footer) => {
         .append($('<button>', { "class": "btn btn-primary", "type": "submit", "form": layout.ids.modalForm.substr(1) }).text("Submit"))
         ;
     }
-
-    modalForm.validate(rules);
-    // workaround, submithandler in validate is not called on second time... so set again here explicitly
-    /* humm, this will post submit twice, creating 2 same entries in packages...
-    modalFooter.find(':submit').click(() => {
-        rules.submitHandler();
-        ele.modal('hide');
-    });
-    */
 
     ele.modal({
         backdrop: true,
@@ -363,6 +365,11 @@ class Modal {
         let footer = $('<button>', { "class": "btn btn-secondary", "type": "button", "data-dismiss": "modal" }).text("Cancel");
 
         let onSubmit = () => {
+            console.log("detail onSubmit");
+            setTimeout(() => {
+                $(layout.ids.modal).modal('hide');
+                update.render();
+            }, 3000);
             return false; // don't reload publish page
         };
         let rules = {
