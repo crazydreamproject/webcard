@@ -14,14 +14,15 @@
         <p class="lead">Buttons and Text Fields</p>
         <hr class="my-4">
         <p>
-        Button and text field (or just field) are object where users can interact with. You can create new button or field from "Objects" pull-down menu.
+        Buttons and text fields (or just field) are object where players can interact with. You can create new button or field from "Objects" pull-down menu.
         Buttons and fields have style you can change by double-click specific button or field. You can write script for specific button and field to
         do what you want, like going to next card when "Next" button is pressed.
         </p>
         <p class="lead">Browse and Edit Mode</p>
         <hr class="my-4">
         <p>
-        In "Tools" pallete, you can find "Browse" and "Edit" button on the top. On Edit mode, you can move buttons and fields around in card and edit by 
+        In "Tools" pallete, you can find "Browse" and "Edit" button on the top. Press "Edit" or "Browse" button to be in that mode.
+        On Edit mode, you can move buttons and fields around in card and edit by 
         double-clicking it. On "Browse" mode, buttons and fields are sticked and will not move, and clicking button will fire the script you wrote for that button.
         </p>
         <hr class="my-4">
@@ -29,7 +30,12 @@
         That's about it, have fun to start playing with WebCard by pressing "Develop" tab on the top!
         </p>
         <h1 class="display-4">Tutorial</h1>
-        <p class="lead">! Under construction.</p>
+        <p class="lead">Tutorials are Available in the Market</p>
+        <hr class="my-4">
+        <p>
+        Go to <a class="btn btn-primary" href="{% url 'packages:market' %}" role="button">Market</a> and find out "Basic Tutorial" to try interactively
+        about what was written in the Concept section. It's in the Tutorials category. You can also go to Market by clicking "Market" on top menubar.
+        </p>
         <br>
         <h1 class="display-4">Scripting</h1>
         <p class="lead">How it works</p>
@@ -208,78 +214,434 @@
                 </tr>
             </tbody>
         </table>
-        <p class="lead">Clause</p>
+        <br>
+        <p class="lead">Comments</p>
         <hr class="my-4">
         <p>
-        Expression notation of clause, used in command reference is as follows:
+        line that starts with <code>#</code> or <code>//</code> will be interpreted as comments for human readability and will cause no effect.<br>
+        Example:
+        <pre><code>
+    on mouseUp
+        # This line is a comment. Check mouseUp message handler is called
+        put "mouseUp is called" into fld 1
+    end mouseUp
+        </code></pre>
         </p>
+        <br>
+        <p class="lead">Number Literals</p>
+        <hr class="my-4">
+        <p>
+        Number literals are just any numbers like <code>42</code> and <code>3.14</code> in the example below.
+        <pre><code>
+    put 42 into field "answer"
+    put 3.14 into field "PI"
+        </code></pre>
+        </p>
+        <br>
+        <p class="lead">String Literals</p>
+        <hr class="my-4">
+        <p>
+        String literals are sentences like <code>"quick brown fox"</code> and <code>"pangram"</code> inside double quotes <code>""</code> in the example below.
+        <pre><code>
+    put "quick brown fox" into field "pangram"
+        </code></pre>
+        </p>
+        <br>
+        <p class="lead">Variables</p>
+        <hr class="my-4">
+        <p>
+        Variables are used to hold values and to use it later in the script. To create variable, use <code>put</code> command.<br>
+        In the example below, <code>result</code> is variable that holds a value, <code>42</code>.
+
+        <pre><code>
+    put 42 into result
+        </code></pre>
+        There are two types of variables, local variables and global variables. Above is an example of "local" variables where
+        only within that message handler can access to its value. To make it global, use <code>global</code> keyword to define.
+        In below example, <code>score</code> and <code>nextcard</code> is global variables.
+        <pre><code>
+    on mouseUp
+        global score, nextcard
+        put 42 into score
+        if score > 40 then
+            put "newRecord" into nextcard
+        else
+            put "showRanking" into nextcard
+        end if
+    end mouseUp
+        </code></pre>
+        Later in another message handler of same or different object, these <code>score</code> and <code>nextcard</code> can be referenced.
+        <pre><code>
+    on arrowKey
+        global score, nextcard
+        put score into field "currentRecord"
+        go to card nextcard
+    end arrowKey
+        </code></pre>
+        </p>
+        <br>
+        <p class="lead">Properties</p>
+        <hr class="my-4">
+        <p>
+        Objects like button, field, card, background and stack have properties. You can get or set (if applicable) properties using <code>get</code> and <code>set</code> command.
+        For example, to access name property of a button:
+        <pre><code>
+    on mouseUp
+        get name of btn 1
+        # get will store the result in special variable called 'it'.
+        put it into fld "btnName"
+        # same thing in one action
+        put name of btn 1 into fld "btnName"
+        set name of btn 1 to "Renamed Btn Name"
+    end mouseUp
+        </code></pre>
+        Below is list of properties in each objects.
+        <br>
+        <br>
+        <h5 class="">Button Object Properties</h5>
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Clause</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>&lt;selecter_pointer&gt;</td>
-                    <td>first, last, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth</td>
-                </tr>
-                <tr>
-                    <td>&lt;direction_pointer&gt;</td>
-                    <td>next, prev</td>
-                </tr>
-                <tr>
-                    <td>&lt;frame_pointer&gt;</td>
-                    <td>this</td>
-                </tr>
-                <tr>
-                    <td>&lt;navigation_pointer&gt;</td>
-                    <td>&lt;selecter_pointer&gt; or &lt;direction_pointer&gt; or &lt;frame_pointer&gt;</td>
-                </tr>
-                <tr>
-                    <td>&lt;card_object_clause&gt;</td>
-                    <td>&lt;navigation_pointer&gt; or &lt;navigation_pointergt&gt; card or card &lt;expr&gt; or card id &lt;expr&gt;</td>
-                </tr>
-                <tr>
-                    <td>&lt;expr&gt;</td>
-                    <td>number literal or string literal or constant or variable or &lt;property&gt; or &lt;container&gt;</td>
-                </tr>
+                <tr><td>autoHilite</td><td>Boolean, Hilite on mouse enter if true, don't if false</td></tr>
+                <tr><td>showName</td><td>Boolean, Show this button name if true, hide this button name if false</td></tr>
+                <tr><td>left</td><td>Integer, Left location of this button</td></tr>
+                <tr><td>top</td><td>Integer, Top location of this button</td></tr>
+                <tr><td>right</td><td>Integer, Right location of this button</td></tr>
+                <tr><td>bottom</td><td>Integer, Bottom location of this button</td></tr>
+                <tr><td>topLeft</td><td>(Integer,Integer), Top and Left location of this button</td></tr>
+                <tr><td>bottomRight|botRight</td><td>(Integer,Integer), Bottom and Right location of this button</td></tr>
+                <tr><td>width</td><td>Integer, width of this button</td></tr>
+                <tr><td>height</td><td>Integer, Height of this button</td></tr>
+                <tr><td>enabled</td><td>Boolean, Active if true, inactive if false</td></tr>
+                <tr><td>family</td><td>Integer, (TBD: group number if radio button style)</td></tr>
+                <tr><td>hilite</td><td>Boolean, hilited if true</td></tr>
+                <tr><td>icon</td><td>String, name if icon if set</td></tr>
+                <tr><td>id</td><td>Integer, Read Only, ID of this button</td></tr>
+                <tr><td>loc</td><td>(Integer, Integer), location of center of this button</td></tr>
+                <tr><td>name</td><td>String, name if this button</td></tr>
+                <tr><td>number</td><td>Integer, Read Only, secuential number of this button in this card</td></tr>
+                <tr><td>partNumber</td><td>Integer, Read Only, secuential part number (button and field) of this button in this card</td></tr>
+                <tr><td>rect</td><td>(Integer, Integer, Integer, Integer), top, left, bottom right of this button</td></tr>
+                <tr><td>script</td><td>String, message handlers of this button</td></tr>
+                <tr><td>scriptingLanguage</td><td>String, (TBD: Currently <span>Talk Script</span> only)</td></tr>
+                <tr><td>sharedHilite</td><td>Boolean, (TBD: shared hilited if true)</td></tr>
+                <tr><td>style</td><td>String, style this button</td></tr>
+                <tr><td>textAlign</td><td>String, text alignment of this button</td></tr>
+                <tr><td>textFont</td><td>String, text font of this button</td></tr>
+                <tr><td>textHeight</td><td>Integer + "px", text height of this this button</td></tr>
+                <tr><td>textSize</td><td>Integer + "px", text height of this this button</td></tr>
+                <tr><td>textStyle</td><td>String, text style of this button</td></tr>
+                <tr><td>titleWidth</td><td>Integer, (TBD)</td></tr>
+                <tr><td>visible</td><td>Boolean, button is shown if true, hidden if false</td></tr>
             </tbody>
         </table>
-        <p class="lead">Navigation Commands</p>
-        <hr class="my-4">
-        <h4 class="">go</h4>
+        <br>
+        <h5 class="">Field Object Properties</h5>
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">syntax</th>
-                    <th scope="col">example</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
                 </tr>
             </thead>
             <tbody>
+                <tr><td>autoSelect</td><td>Boolean, (TBD select line in field if true, don't if false)</td></tr>
+                <tr><td>autoTab</td><td>Boolean, (TBD go next field by tab if true, don't if false)</td></tr>
+                <tr><td>dontSearch</td><td>Boolean, (TBD do not search content of this field if true)</td></tr>
+                <tr><td>dontWrap</td><td>Boolean, (TBD do not wrap at end of line width of this field if true)</td></tr>
+                <tr><td>fixedLineHeight</td><td>Boolean, (TBD line height of this field is all the same if true)</td></tr>
+                <tr><td>id</td><td>Integer, Read Only, ID of this field</td></tr>
+                <tr><td>left</td><td>Integer, Left location of this field</td></tr>
+                <tr><td>top</td><td>Integer, Top location of this field</td></tr>
+                <tr><td>right</td><td>Integer, Right location of this field</td></tr>
+                <tr><td>bottom</td><td>Integer, Bottom location of this field</td></tr>
+                <tr><td>topLeft</td><td>(Integer,Integer), Top and Left location of this field</td></tr>
+                <tr><td>bottomRight|botRight</td><td>(Integer,Integer), Bottom and Right location of this field</td></tr>
+                <tr><td>width</td><td>Integer, width of this field</td></tr>
+                <tr><td>height</td><td>Integer, Height of this field</td></tr>
+                <tr><td>loc</td><td>(Integer, Integer), location of center of this field</td></tr>
+                <tr><td>lockText</td><td>Boolean, (TBD don't enable input to fhis field if true)</td></tr>
+                <tr><td>showLines</td><td>Boolean, (TBD show each base line of line in field if true)</td></tr>
+                <tr><td>wideMargines</td><td>Boolean, (TBD wider margine of this field if true)</td></tr>
+                <tr><td>multipleLines</td><td>Boolean, (TBD multiple lines can be selected in this field if true)</td></tr>
+                <tr><td>name</td><td>String, name if this field</td></tr>
+                <tr><td>number</td><td>Integer, Read Only, secuential number of this field in this card</td></tr>
+                <tr><td>rect</td><td>(Integer, Integer, Integer, Integer), top, left, bottom right of this field</td></tr>
+                <tr><td>scroll</td><td>Integer, (TBD how much is scrolled in this field in pixels)</td></tr>
+                <tr><td>script</td><td>String, message handlers of this field</td></tr>
+                <tr><td>scriptingLanguage</td><td>String, (TBD: Currently <span>Talk Script</span> only)</td></tr>
+                <tr><td>sharedText</td><td>Boolean, (TBD: shared text among same background if true)</td></tr>
+                <tr><td>style</td><td>String, style this field</td></tr>
+                <tr><td>textAlign</td><td>String, text alignment of this field</td></tr>
+                <tr><td>textFont</td><td>String, text font of this field</td></tr>
+                <tr><td>textHeight</td><td>Integer + "px", text height of this this field</td></tr>
+                <tr><td>textSize</td><td>Integer + "px", text height of this this field</td></tr>
+                <tr><td>textStyle</td><td>String, text style of this field</td></tr>
+                <tr><td>visible</td><td>Boolean, field is shown if true, hidden if false</td></tr>
+            </tbody>
+        </table>
+        <br>
+        <h5 class="">Card, Background and Stack Object Properties</h5>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
                 <tr>
-                    <td>go [to] &lt;card object clause&gt;</td>
-                    <td>go to next, go card "shop", go cd 3</td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>cantAbort</td><td>Boolean, (TBD: Can not stop script execution if true)</td></tr>
+                <tr><td>cantDelete</td><td>Boolean, (TBD: Can not delete this card, background, stack if true)</td></tr>
+                <tr><td>cantModify</td><td>Boolean, (TBD: Can not modify this card, background, stack if true)</td></tr>
+                <tr><td>cantPeek</td><td>Boolean, (TBD: Can not look scipt etc if true)</td></tr>
+                <tr><td>freeSize</td><td>Integer, (TBD: Available usable local storage size in byte)</td></tr>
+                <tr><td>size</td><td>Integer, (TBD: current local storage size of this stack in byte)</td></tr>
+                <tr><td>id</td><td>Integer, Read Only, ID of this card, background, stack</td></tr>
+                <tr><td>marked</td><td>Boolean, (TBD: checked or not for search)</td></tr>
+                <tr><td>name</td><td>String, name if this field</td></tr>
+                <tr><td>number</td><td>Integer, Read Only, secuential number of this card, background, stack</td></tr>
+                <tr><td>owner</td><td>(TBD: background if card, stack if background of it belongs to)</td></tr>
+                <tr><td>rect</td><td>(Integer, Integer, Integer, Integer), top, left, bottom right of this card, background, stack</td></tr>
+                <tr><td>reportTemplates</td><td>(TBD: template for printing)</td></tr>
+                <tr><td>script</td><td>String, message handlers of this card, background, stack</td></tr>
+                <tr><td>scriptingLanguage</td><td>String, (TBD: Currently <span>Talk Script</span> only)</td></tr>
+                <tr><td>showPict</td><td>Boolean, Show picture of this card, background, stack if true</td></tr>
+            </tbody>
+        </table>
+        </p>
+        <br>
+        <p class="lead">Containers</p>
+        <hr class="my-4">
+        <p>
+        Containers are places where you can <code>put</code> things in. Below are container types:
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Field Object</td><td>Contents of field is where you can <code>put</code> into.</td></tr>
+                <tr><td><code>message box</code> | <code>message</code> | <code>msg</code></td><td>If <code>put</code> is used without <code>into</code>, message box is used as container</td></tr>
+                <tr><td><code>it</code></td><td><code>get</code> command will put result into <code>it</code> varialbe container</td></tr>
+                <tr><td>clipboard</td><td>(TBD: clipboard)</td></tr>
+            </tbody>
+        </table>
+        Some examples:
+        <pre><code>
+    on mouseUp
+        put "hello" into fld "salute"
+        # to put into some chunk in field container
+        put "hello" into line 3 of fld "salute"
+        put "best" into word 2 of line 4 of fld "salute"
+        put "hello" into msg
+        # same thing
+        put "hello"
+    end mouseUp
+        </code></pre>
+        You can display message box by selecting "Message" menu item in "Go" menubar.
+
+        </p>
+        <br>
+        <p class="lead">Clause</p>
+        <hr class="my-4">
+        <p>
+        Clause is used to build up command expression. Expression notation of clause, used in command reference is as follows:
+        </p>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">Clause</th><th scope="col">Expression Notation</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&lt;selecter_pointer&gt;</td>
+                    <td><code>first</code>, <code>last</code>, <code>second</code>, <code>third</code>, <code>fourth</code>, <code>fifth</code>,
+                        <code>sixth</code>, <code>seventh</code>, <code>eighth</code>, <code>ninth</code>, <code>tenth</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;direction_pointer&gt;</td>
+                    <td><code>next</code>, <code>prev</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;frame_pointer&gt;</td>
+                    <td><code>this</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;navigation_pointer&gt;</td>
+                    <td><code>&lt;selecter_pointer&gt;</code>, <code>&lt;direction_pointer&gt;</code>, <code>&lt;frame_pointer&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;arrow_pointer&gt;</td>
+                    <td><code>up</code>, <code>down</code>, <code>left</code>, <code>right</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;preposition_pointer&gt;</td>
+                    <td><code>before</code>, <code>into</code>, <code>after</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;tool_type&gt;</td>
+                    <td>
+                        <code>browse tool</code>, 
+                        <code>button tool</code>, 
+                        <code>field tool</code>, 
+                        <code>edit tool</code>, 
+                        <code>pattern tool</code>, 
+                        <code>crop tool</code>, 
+                        <code>eyedrop tool</code>, 
+                        <code>scroll tool</code>, 
+                        <code>magicwand tool</code>, 
+                        <code>select tool</code>, 
+                        <code>lasso tool</code>, 
+                        <code>pencil tool</code>, 
+                        <code>brush tool</code>, 
+                        <code>eraser tool</code>, 
+                        <code>line tool</code>, 
+                        <code>spray tool</code>, 
+                        <code>rectangle tool</code>, 
+                        <code>bucket tool</code>, 
+                        <code>oval tool</code>, 
+                        <code>curve tool</code>, 
+                        <code>text tool</code>
+                </tr>
+                <tr>
+                    <td>&lt;expr&gt;</td>
+                    <td><code>&lt;number literal&gt;</code>, <code>&lt;string literal&gt;</code>, <code>&lt;constant&gt;</code>, <code>&lt;variable&gt;</code>, <code>&lt;property&gt;</code>, <code>&lt;container&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;card_object_clause&gt;</td>
+                    <td><code>&lt;navigation_pointer&gt;</code>, <code>&lt;navigation_pointer&gt; card</code>, <code>card &lt;expr&gt;</code>, <code>card id &lt;expr&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;button_object_clause&gt;</td>
+                    <td><code>button &lt;expr&gt;</code>, <code>button id &lt;expr&gt;</code>, <code>button &lt;expr&gt; of &lt;card_object_clause&gt;</code>, <code>button id &lt;expr&gt; of &lt;card_object_clause&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;field_object_clause&gt;</td>
+                    <td><code>field &lt;expr&gt;</code>, <code>field id &lt;expr&gt;</code>, <code>field &lt;expr&gt; of &lt;card_object_clause&gt;</code>, <code>field id &lt;expr&gt; of &lt;card_object_clause&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>&lt;part_object_clause&gt;</td>
+                    <td><code>&lt;button_object_clause&gt;</code>, <code>&lt;field_object_clause&gt;</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <p class="lead">Navigation Commands</p>
+        <hr class="my-4">
+        <h5 class="">go, push, pop, help, arrow key</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>go [to]</code> &lt;card_object_clause&gt;</td>
+                    <td>Navigate to card specified by &lt;card_object_clause&gt;</td>
+                    <td><code>go to next</code>, <code>go card "shop"</code>, <code>go cd 3</code></td>
+                </tr>
+                <tr>
+                    <td><code>push</code> &lt;card_object_clause&gt;</td>
+                    <td>Navigate to &lt;card_object_clause&gt; memorizing current card</td>
+                    <td><code>push next</code>, <code>push card "shop"</code>, <code>push cd 3</code></td>
+                </tr>
+                <tr>
+                    <td><code>pop</code></td>
+                    <td>Navigate back to last memorized card</td>
+                    <td><code>pop</code></td>
+                </tr>
+                <tr>
+                    <td><code>help</code></td>
+                    <td>(TBD: Navigate to Help deck)</td>
+                    <td><code>help</code></td>
+                </tr>
+                <tr>
+                    <td><code>arrowKey</code> &lt;arrow_pointer&gt;</td>
+                    <td>Navigate as if arrow key is pressed.</td>
+                    <td><code>arrowKey right</code>, <code>arrowKey left</code></td>
                 </tr>
             </tbody>
         </table>
         <p>
+        These navigation commands let's you move from current card to another card.
         </p>
-        <h4 class="">push</h4>
-        <h4 class="">pop</h4>
-        <h4 class="">help</h4>
-        <h4 class="">arrow key</h4>
+        <br>
         <p class="lead">Action Commands</p>
         <hr class="my-4">
-        <h4 class="">put</h4>
-        <h4 class="">delete</h4>
-        <h4 class="">enable</h4>
-        <h4 class="">disable</h4>
-        <h4 class="">choose</h4>
-        <h4 class="">click at</h4>
-        <h4 class="">drag from</h4>
-        <h4 class="">type</h4>
+        <h5 class="">put, delete, enable, disable, choose, click at, drag from, type</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>put</code> &lt;expr&gt;</td>
+                    <td>Put some value to message box</td>
+                    <td><code>put "hello"</code></td>
+                </tr>
+                <tr>
+                    <td><code>put</code> &lt;expr&gt; &lt;preposition_pointer&gt; &lt;variable&gt;</td>
+                    <td>Put some value to variable</td>
+                    <td><code>put 42 into answerToEverything</code></td>
+                </tr>
+                <tr>
+                    <td><code>put</code> &lt;expr&gt; &lt;preposition_pointer&gt; &lt;container&gt;</td>
+                    <td>Put some value to container</td>
+                    <td><code>put "The" before line 1 of fld 1</code></td>
+                </tr>
+                <tr>
+                    <td><code>delete</code> &lt;part_object_clause&gt;</td>
+                    <td>Delete part object specified</td>
+                    <td><code>delete fld 3 of card 2</code></td>
+                </tr>
+                <tr>
+                    <td><code>enable</code> &lt;button_object_clause&gt;</td>
+                    <td>Enable button object specified</td>
+                    <td><code>enable btn 2 of card 2</code></td>
+                </tr>
+                <tr>
+                    <td><code>disable</code> &lt;button_object_clause&gt;</td>
+                    <td>Disable button object specified</td>
+                    <td><code>disable btn "OK"</code></td>
+                </tr>
+                <tr>
+                    <td><code>choose</code> &lt;tool_type&gt;</td>
+                    <td>Choose specified tool in Tool Palette</td>
+                    <td><code>choose browse tool</code></td>
+                </tr>
+                <tr>
+                    <td><code>click at</code> &lt;expr&gt;, &lt;expr&gt; </td>
+                    <td>Perform click at given location</td>
+                    <td><code>click at 100, 100</code>, <code>click at loc of btn 1</code></td>
+                </tr>
+                <tr>
+                    <td><code>drag from</code> &lt;expr&gt;, &lt;expr&gt; <code>to</code> &lt;expr&gt;, &lt;expr&gt;</td>
+                    <td>Perform drag from given location to location</td>
+                    <td><code>drag from 100, 100 to loc of btn 1</code></td>
+                </tr>
+                <tr>
+                    <td><code>type</code> &lt;expr&gt; </td>
+                    <td>Perform keyboard type of text</td>
+                    <td><code>type "hello"</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        You can combine these for example:
+        <pre><code>
+    on mouseUp
+        choose line tool
+        drag from 100, 100 to 200, 200
+        choose browse tool
+    end mouseUp
+        </code></pre>
+        to perform drawing from script!
+        </p>
         <p class="lead">Sound Commands</p>
         <hr class="my-4">
         <h4 class="">beep</h4>
