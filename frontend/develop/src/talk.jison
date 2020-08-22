@@ -403,7 +403,7 @@
 "lock"\s+"recent" return 'LOCK_RECENT_CMD' // confilict with lockRecent property
 "unlock"\s+"recent" return 'UNLOCK_RECENT_CMD'
 "answer"\s+"program" return 'ANSWER_PROGRAM'
-"arroyKey" return 'ARROW_KEY'
+"arrowKey" return 'ARROW_KEY'
 
 // action commands
 "put" return 'PUT'
