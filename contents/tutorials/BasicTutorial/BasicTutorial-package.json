@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "name": "Basic Tutorial",
+  "author": 1,
+  "stack": 1,
+  "version": 1,
+  "description": "This deck will walk-through the basic concepts of WebCard. \r\nIt's more in depth and playable sandbox of what's written in documents.\r\nWhen you are through, you are ready to start creating your own deck!",
+  "image": "https://webcard-bucket.s3.amazonaws.com/media/img/BasicTutorial.png",
+  "created_at": "2020-08-10T07:33:15.101634Z",
+  "updated_at": "2020-08-15T08:54:54.563612Z",
+  "metadata": {
+    "age": 5,
+    "lang": "en",
+    "publisher": "Official"
+  },
+  "available": true,
+  "category": "tutorial"
+}
