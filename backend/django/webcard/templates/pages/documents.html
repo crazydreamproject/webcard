@@ -641,64 +641,317 @@
     end mouseUp
         </code></pre>
         to perform drawing from script!
+        <code>enable</code> and <code>disable</code> will show objects, but in gray out if disabled. 
+        Also <code>enabled</code> property is set to <code>true</code> if enabled, and <code>false</code> if disabled.
         </p>
         <p class="lead">Sound Commands</p>
         <hr class="my-4">
-        <h4 class="">beep</h4>
-        <h4 class="">play</h4>
-        <h4 class="">play stop</h4>
-        <h4 class="">speak</h4>
-        <h4 class="">stop speach</h4>
+        <h5 class="">beep, play, play stop, speak, stop speach</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>beep</code> [&lt;expr&gt;]</td>
+                    <td>Beep sound &lt;expr&gt; times (default 3 times)</td>
+                    <td><code>beep 1</code></td>
+                </tr>
+                <tr>
+                    <td><code>play</code> &lt;string literal&gt; </td>
+                    <td>Play sound with "instrument"</td>
+                    <td><code>play "boing"</code></td>
+                </tr>
+                <tr>
+                    <td><code>play</code> &lt;string literal&gt;, &lt;string literal&gt; </td>
+                    <td>Play sound "keys" with "instrument" </td>
+                    <td><code>play "flute", "c4 d e f"</code></td>
+                </tr>
+                <tr>
+                    <td><code>play</code> &lt;string literal&gt;, <code>tempo</code> &lt;expr&gt;, &lt;string literal&gt; </td>
+                    <td>Play sound "keys" with tempo &lt;expr&gt; with "instrument" </td>
+                    <td><code>play "harpsicode", tempo 100, "c4 d e f g a b c5"</code></td>
+                </tr>
+                <tr>
+                    <td><code>play stop</code></td>
+                    <td>Stop playing sound started by <code>play</code> command </td>
+                    <td><code>play stop</code></td>
+                </tr>
+                <tr>
+                    <td><code>stop sound</code></td>
+                    <td>Stop all sounds</td>
+                    <td><code>stop sound</code></td>
+                </tr>
+                <tr>
+                    <td><code>speak</code> &lt;string literal&gt;, <code>with</code> &lt;voice type&gt; </td>
+                    <td>Speak sentence with given voice (see below)</td>
+                    <td><code>speak "Bye-Bye" with female voice</code></td>
+                </tr>
+                <tr>
+                    <td><code>stop speach</code></td>
+                    <td>Stop <code>speak</code> command</td>
+                    <td><code>stop speach</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        &lt;voice type&gt; could be <code>male voice</code>, <code>female voice</code>, <code>neuter voice</code>, or any installed voice with double quote, for example:
+        <pre><code>
+    on mouseUp
+        speak "Good Morning" with voice "Whisper"
+    end mouseUp
+        </code></pre>
+        Sound commands are now under development and currently not functional.
+        </p>
         <p class="lead">Arithmatic Commands</p>
         <hr class="my-4">
-        <h4 class="">add</h4>
-        <h4 class="">subtract</h4>
-        <h4 class="">multiply</h4>
-        <h4 class="">divide</h4>
-        <!-- Search Commands -->
+        <h5 class="">add, subtract, multiply, divide</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>add</code> &lt;expr&gt; <code>to</code> &lt;container&gt;|&lt;variable&gt;</td>
+                    <td>Add &lt;expr&gt; value to &lt;container&gt; or &lt;variable&gt;</td>
+                    <td><code>add 5 to fld 2</code></td>
+                </tr>
+                <tr>
+                    <td><code>subtract</code> &lt;expr&gt; <code>from</code> &lt;container&gt;|&lt;variable&gt;</td>
+                    <td>Subtract &lt;expr&gt; value from &lt;container&gt; or &lt;variable&gt;</td>
+                    <td><code>subtract 3 from var2</code></td>
+                </tr>
+                <tr>
+                    <td><code>multiply</code> &lt;container&gt;|&lt;variable&gt; <code>by</code> &lt;expr&gt;</td>
+                    <td>Multiply &lt;container&gt; or &lt;variable&gt; by &lt;expr&gt; value</td>
+                    <td><code>multiply var2 by id of btn "mul"</code></td>
+                </tr>
+                <tr>
+                    <td><code>divide</code> &lt;container&gt;|&lt;variable&gt; <code>by</code> &lt;expr&gt;</td>
+                    <td>Divide &lt;container&gt; or &lt;variable&gt; by &lt;expr&gt; value</td>
+                    <td><code>divide message box by fld 2</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        Directly apply arithmatic operations to &lt;container&gt; or &lt;variable&gt;. <code>put</code> can be used to do same thing (with longer words).
+        <pre><code>
+    on mouseUp
+        add 5 to fld 2
+        # below is equivalent of above
+        put (fld 2) + 5 into fld 2
+    end mouseUp
+        </code></pre>
+        </p>
+        <!-- Search Commands to be written -->
         <p class="lead">Display Commands</p>
         <hr class="my-4">
-        <h4 class="">visual</h4>
-        <h4 class="">flash</h4>
-        <h4 class="">answer</h4>
-        <h4 class="">ask</h4>
-        <h4 class="">lock screen</h4>
-        <h4 class="">unlock screen</h4>
+        <h5 class="">visual, flash, answer, ask, lock screen, unlock screen</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>visual</code>|<code>visual effect</code> &lt;visual effect clause&gt;</td>
+                    <td>Apply visual effect, usually to current card</td>
+                    <td><code>visual effect wipe left slowly</code></td>
+                </tr>
+                <tr>
+                    <td><code>flash</code> (&lt;expr&gt;)</td>
+                    <td>flash, usually current card &lt;expr&gt; times (default 3 times)</td>
+                    <td><code>flash 5</code></td>
+                </tr>
+                <tr>
+                    <td><code>answer</code> &lt;expr&gt; [ <code>with</code> &lt;string literal&gt; [ <code>or</code> &lt;string literal&gt; [ <code>or</code> &lt;string literal&gt; ] ] ]</td>
+                    <td>Prompts user with multiple (up to 3) choices. Result in <code>it</code> variable.</td>
+                    <td><code>answer "Beef or Chicken?" with "Beef" or "Chicken" or "Vegi"</code></td>
+                </tr>
+                <tr>
+                    <td><code>ask</code> &lt;expr&gt; [ <code>with</code> &lt;expr&gt; ]</td>
+                    <td>Ask user with default string. Result in <code>it</code> variable.</td>
+                    <td><code>ask "Where do you live?" with "On Earth"</code></td>
+                </tr>
+                <tr>
+                    <td><code>lock screen</code></td>
+                    <td>Stop changing visual of current card</td>
+                    <td><code>lock screen</code></td>
+                </tr>
+                <tr>
+                    <td><code>unlock screen</code>|<code>unlock screen with visual effect</code> &lt;visual effect clause&gt;</td>
+                    <td>Redraw current card with specified visual effect</td>
+                    <td><code>unlock screen with visual effect checkerboard</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        Usually, <code>lock screen</code> and <code>unlock screen</code> is used as pair, with some visual change on card added in between.
+        <pre><code>
+    on mouseUp
+        lock screen
+        go next card
+        unlock screen with visual effect barn door open
+    end mouseUp
+        </code></pre>
+        Caveat, currently, <code>ask</code> and <code>answer</code> will return result to <code>it</code> variable AFTER user input to prompt is 
+        made, but script will run async with prompt. So below will NOT put result in <code>it</code> variable at this timing.
+        <pre><code>
+    on mouseUp
+        answer "Black or White?" with "Black" or "White"
+        # below will not reflect above result since at this time, user has not yet input to prompt.
+        put it into fld 1
+    end mouseUp
+        </code></pre>
+        </p>
         <p class="lead">Object Manipulation Commands</p>
         <hr class="my-4">
-        <h4 class="">get</h4>
-        <h4 class="">hide</h4>
-        <h4 class="">show</h4>
+        <h5 class="">get, set, show, hide</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>get</code> &lt;property clause&gt;</td>
+                    <td>Obtain &lt;property&gt; and put into <code>it</code> variable</td>
+                    <td><code>get visible of fld 1</code></td>
+                </tr>
+                <tr>
+                    <td><code>set</code> &lt;property clause&gt; <code>to</code> &lt;expr&gt;</td>
+                    <td>Set &lt;property&gt; to &lt;expr&gt;</td>
+                    <td><code>set textFont of fld 1 to "Helvetica"</code></td>
+                </tr>
+                <tr>
+                    <td><code>hide</code> &lt;object clause&gt;|<code>menuBar</code>|<code>titleBar</code></td>
+                    <td>Hide &lt;object&gt; so it can not be seen. see <code>visible</code> property.</td>
+                    <td><code>hide card button "show result"</code></td>
+                </tr>
+                <tr>
+                    <td><code>show</code> &lt;object clause&gt;</td>
+                    <td>Show &lt;object&gt; so it can be seen. see <code>visible</code> property.</td>
+                    <td><code>show bg field "status"</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        <code>hide</code> will set <code>visible</code> property of object to <code>false</code> and
+        <code>show</code> will set <code>visible</code> property of object to <code>true</code>.
+        <pre><code>
+    on mouseUp
+        hide btn 1
+        # below will put false
+        put visible of btn 1 into fld 1
+    end mouseUp
+        </code></pre>
+        </p>
         <p class="lead">File Commands</p>
         <hr class="my-4">
-        <h4 class="">open</h4>
-        <h4 class="">close</h4>
-        <h4 class="">read from file</h4>
-        <h4 class="">write to file</h4>
-        <h4 class="">print</h4>
+        <p>
+        TBD.
+        </p>
+        <!-- open, close, read from file, write to file, print -->
         <p class="lead">Menu Commands</p>
         <hr class="my-4">
-        <h4 class="">do menu</h4>
-        <h4 class="">create menu</h4>
-        <h4 class="">delete</h4>
-        <h4 class="">reset menubar</h4>
-        <h4 class="">enable</h4>
-        <h4 class="">disable</h4>
+        <h5 class="">do menu, create menu, delete, reset menubar, enable, disable</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>doMenu</code> &lt;expr&gt; [ <code>of menu</code> &lt;menubar clause&gt; ]</td>
+                    <td>Perform menu of &lt;expr&gt;</td>
+                    <td><code>doMenu "New Button" of menu "Objects"</code></td>
+                </tr>
+                <tr>
+                    <td><code>create menu</code> &lt;expr&gt;</td>
+                    <td>Create new menu of &lt;expr&gt;</td>
+                    <td><code>create menu "Personal"</code></td>
+                </tr>
+                <tr>
+                    <td><code>delete</code> &lt;menu&gt;|&lt;menuitem&gt;</td>
+                    <td>Delete &lt;menu&gt; or &lt;menuitem&gt;.</td>
+                    <td><code>delete menuItem "My Address" of menu "Personal"</code></td>
+                </tr>
+                <tr>
+                    <td><code>reset menubar</code></td>
+                    <td>Reset menubar and menu items to default.</td>
+                    <td><code>reset menubar</code></td>
+                </tr>
+                <tr>
+                    <td><code>enable</code>&lt;menu&gt;|&lt;menuitem&gt;</td>
+                    <td>Enable menu or menu item</td>
+                    <td><code>enable menuItem "My Address" of menu "Personal"</code></td>
+                </tr>
+                <tr>
+                    <td><code>disable</code>&lt;menu&gt;|&lt;menuitem&gt;</td>
+                    <td>Disable menu or menu item</td>
+                    <td><code>disable menu "Go"</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        </p>
         <p class="lead">Printing Commands</p>
         <hr class="my-4">
+        <p>
+        TBD.
+        </p>
+        <!--
         <h4 class="">open printing</h4>
         <h4 class="">close printing</h4>
         <h4 class="">print</h4>
         <h4 class="">reset print</h4>
+        -->
         <p class="lead">Script Commands</p>
         <hr class="my-4">
-        <h4 class="">wait</h4>
-        <h4 class="">wait until</h4>
-        <h4 class="">exit</h4>
-        <h4 class="">lock messages</h4>
-        <h4 class="">unlock messages</h4>
-        <h4 class="">start using</h4>
-        <h4 class="">stop using</h4>
+        <h5 class="">wait, wait until, exit, lock messages, unlock messages, start using, stop using</h6>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
+                <tr><th scope="col">syntax</th><th scope="col">description</th><th scope="col">example</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>wait</code> &lt;expr&gt; [ <code>seconds</code>|<code>ticks</code> ]</td>
+                    <td>Stop script for &lt;expr&gt; duration. default is <code>ticks</code></td>
+                    <td><code>wait 3 sec</code></td>
+                </tr>
+                <tr>
+                    <td><code>wait until</code> &lt;expr&gt; </td>
+                    <td>Stop script until &lt;expr&gt; condition is met.</td>
+                    <td><code>wait until the mouse is down</code></td>
+                </tr>
+                <tr>
+                    <td><code>exit to HyperCard</code></td>
+                    <td>stop script execution and any other handlers</td>
+                    <td><code>exit to HyperCard</code></td>
+                </tr>
+                <tr>
+                    <td><code>lock messages</code></td>
+                    <td>set <code>lock messages</code> property to <code>true</code></td>
+                    <td><code>lock messages</code></td>
+                </tr>
+                <tr>
+                    <td><code>unlock messages</code></td>
+                    <td>set <code>lock messages</code> property to <code>false</code></td>
+                    <td><code>unlock messages</code></td>
+                </tr>
+                <tr>
+                    <td><code>start using</code> &lt;expr&gt; </td>
+                    <td>Start using other &lt;expr&gt; stack as library</td>
+                    <td><code>lock messages</code></td>
+                </tr>
+                <tr>
+                    <td><code>stop using</code> &lt;expr&gt; </td>
+                    <td>Stop using other &lt;expr&gt; stack as library</td>
+                    <td><code>lock messages</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+        1 <code>tick</code> is unit of 1/60 second.<br>
+        <code>start using</code> and <code>stop using</code> command is currently not functional.
+        </p>
     </div>
 
 {% endblock content %}
