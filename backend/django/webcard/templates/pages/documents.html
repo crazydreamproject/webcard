@@ -25,16 +25,31 @@
         On Edit mode, you can move buttons and fields around in card and edit by 
         double-clicking it. On "Browse" mode, buttons and fields are sticked and will not move, and clicking button will fire the script you wrote for that button.
         </p>
-        <hr class="my-4">
-        <p>
-        That's about it, have fun to start playing with WebCard by pressing "Develop" tab on the top!
-        </p>
         <h1 class="display-4">Tutorial</h1>
         <p class="lead">Tutorials are Available in the Market</p>
         <hr class="my-4">
         <p>
-        Go to <a class="btn btn-primary" href="{% url 'packages:market' %}" role="button">Market</a> and find out "Basic Tutorial" to try interactively
+        Click <a class="badge badge-pill badge-primary" href="{% url 'packages:market' %}" >Market</a> and find out "Basic Tutorial" to try interactively
         about what was written in the Concept section. It's in the Tutorials category. You can also go to Market by clicking "Market" on top menubar.
+        </p>
+        <br>
+        <h1 class="display-4">Develop</h1>
+        <p class="lead">Create your own stack</p>
+        <hr class="my-4">
+        <p>
+        Click <a class="badge badge-pill badge-primary" href="{% url 'editor:index' %}" >Develop</a> and create your own stack.
+        You might want to read "Scripting" section below to do more! Note that WebCard is currently in alpha stage, and some of the functionality is 
+        missing, and we know there are still some bugs... Visit <a href="https://github.com/crazydreamproject/webcard" >WebCard GitHub</a> and post 
+        issues, have a glance at source code, or you can even try creating patch to fix (greatly appreciated!)
+        </p>
+        <h1 class="display-4">Publish</h1>
+        <p class="lead">Stage for releasing</p>
+        <hr class="my-4">
+        <p>
+        Click <a class="badge badge-pill badge-primary" href="{% url 'packages:publish' %}" >Publish</a> and stage your stack to go to market.
+        Note that you must be logged in, and save your stack to server. Stacks saved on server will appear on "Developing" area. Put a 
+        cover image of your stack, description and other info to move your work to staging. If you are happy with it's look and feel,
+        release your stack to market for everyone to try!
         </p>
         <br>
         <h1 class="display-4">Scripting</h1>
