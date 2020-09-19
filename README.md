@@ -50,6 +50,7 @@ Visit http://localhost:8182/ for publish and http://localhost:8183/ for market f
 ## Run frontend and backend togather
 
 Refer below for complete setups, especially the Prerequisites section.
+
 https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
 
 After you've started frontend apps, open command prompt and go to `backend/django` directory and type
