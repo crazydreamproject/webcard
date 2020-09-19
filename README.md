@@ -24,7 +24,7 @@ Check you have `npm` command after installing node.js.
 After you've cloned the repository, open Node.js command prompt and go to `frontend/develop` directory and type
 
 ```
-npm init
+npm install
 ```
 
 Do the same for `frontend/publish` and `frontend/market` as well.
@@ -49,11 +49,18 @@ Visit http://localhost:8182/ for publish and http://localhost:8183/ for market f
 
 ## Run frontend and backend togather
 
+Refer below for complete setups, especially the Prerequisites section.
+https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
+
 After you've started frontend apps, open command prompt and go to `backend/django` directory and type
 
 ```
+docker-compose -f local.yml build
 docker-compose -f local.yml up
 ```
+
+Above `docker-compose build` is only required first time, and later on, just type `docker-compose up` to launch server.
+
 Visit http://localhost:8000/ on browser.
 It may take a while to first launch server from docker.
 
