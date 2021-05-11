@@ -53,7 +53,7 @@
     "jquery": "^3.5.0",
     "jquery-form-validator": "^2.3.77",
     "jquery-sendkeys": "^4.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "material-icons": "^0.2.3",
     "popper.js": "^1.14.3",
     "recorderjs": "^1.0.1",
